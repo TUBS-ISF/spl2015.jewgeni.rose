@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="jewgenirosetask1">
+				<and name="Base">
+					<description>
+						Featurebasis
+					</description>
+					<feature name="f1"/>
+					<feature name="f2"/>
+					<feature name="f3"/>
+					<feature name="f4"/>
+					<feature name="f5"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
