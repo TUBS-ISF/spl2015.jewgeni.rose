@@ -14,13 +14,6 @@
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
-					<or abstract="true" name="I/O">
-						<description>
-							Basic I/O operations for import from and export to different calendar formats.
-						</description>
-						<feature mandatory="true" name="CSV"/>
-						<feature mandatory="true" name="iCalendar"/>
-					</or>
 					<and name="Meetings">
 						<description>
 							Enables the function to enter meetings or appointments for a specifical date and time. Consists of a meeting title, date, time, place and a remark.
@@ -36,6 +29,13 @@
 									
 								</description>
 							</feature>
+						</or>
+						<or abstract="true" name="I/O">
+							<description>
+								Basic I/O operations for import from and export to different calendar formats.
+							</description>
+							<feature mandatory="true" name="CSV"/>
+							<feature mandatory="true" name="iCalendar"/>
 						</or>
 						<or abstract="true" name="Share">
 							<description>

@@ -1,0 +1,23 @@
+# Lists all features from the model with manual (first digit) and automatic (second digit) selection
+# 0 = deselected, 1 = selected, 2 = undefined
+21jOrganizer
+22Calculator
+21Calendar
+11Meetings
+11Print
+22HTML
+12PDF
+12Plain
+11I/O
+12CSV
+12iCalendar
+22Share
+22Email
+22Facebook
+12Reminder
+22Chat
+22IRC
+11Notes
+12History
+22Clock
+22Alarm
