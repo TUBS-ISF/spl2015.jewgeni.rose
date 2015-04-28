@@ -14,49 +14,49 @@
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
-					<and abstract="true" name="I/O">
+					<or abstract="true" name="I/O">
 						<description>
 							Basic I/O operations for import from and export to different calendar formats.
 						</description>
-						<feature name="CSV"/>
+						<feature mandatory="true" name="CSV"/>
 						<feature mandatory="true" name="iCalendar"/>
-					</and>
+					</or>
 					<and name="Meetings">
 						<description>
 							Enables the function to enter meetings or appointments for a specifical date and time. Consists of a meeting title, date, time, place and a remark.
 						</description>
-						<and abstract="true" name="Print">
+						<or abstract="true" name="Print">
 							<description>
 								Print function. For example, could the user print the current view (or a specifical section) as a PDF or HTML document.
 							</description>
-							<feature name="HTML"/>
-							<feature name="PDF"/>
+							<feature mandatory="true" name="HTML"/>
+							<feature mandatory="true" name="PDF"/>
 							<feature mandatory="true" name="Plain">
 								<description>
-									 
+									
 								</description>
 							</feature>
-						</and>
-						<and abstract="true" name="Share">
+						</or>
+						<or abstract="true" name="Share">
 							<description>
 								Share function (like modern "share buttons") with a possibility for several protocols. The basic protocol to share would be via email.
 							</description>
 							<feature mandatory="true" name="Email"/>
-							<feature name="Facebook"/>
-						</and>
+							<feature mandatory="true" name="Facebook"/>
+						</or>
 						<feature name="Reminder"/>
 					</and>
 				</and>
-				<and abstract="true" name="Chat">
+				<alt abstract="true" name="Chat">
 					<description>
 						Chat function with a possibility for several protocols.
 					</description>
-					<feature name="IRC">
+					<feature mandatory="true" name="IRC">
 						<description>
 							IRC protocol
 						</description>
 					</feature>
-				</and>
+				</alt>
 				<and abstract="true" name="Notes">
 					<description>
 						Function for quick notes (like one note)
