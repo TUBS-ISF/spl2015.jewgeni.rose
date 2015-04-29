@@ -4,20 +4,26 @@
 12Calculator
 11Calendar
 11Meetings
-11Print
+21Print
 22HTML
 12PDF
 12Plain
-11I/O
+22Markdown
+21Import-Export
 22CSV
 12iCalendar
-11Share
+21Share
 12Email
 22Facebook
-12Reminder
-22Chat
-22IRC
-12Notes
+22Twitter
+22LinkedIn
+11Reminder
+12PopUp
+22Email-Notification
+21Weekly View
+22Monthly View
+22Notes
 22History
 22Clock
 22Alarm
+22Multi-User-Support

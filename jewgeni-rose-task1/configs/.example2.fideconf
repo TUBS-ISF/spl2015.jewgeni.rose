@@ -2,22 +2,28 @@
 # 0 = deselected, 1 = selected, 2 = undefined
 21jOrganizer
 12Calculator
-21Calendar
+11Calendar
 11Meetings
-11Print
+21Print
 12HTML
 22PDF
 22Plain
-22I/O
+22Markdown
+22Import-Export
 22CSV
 22iCalendar
 22Share
 22Email
 22Facebook
+22Twitter
+22LinkedIn
 22Reminder
-22Chat
-22IRC
+22PopUp
+22Email-Notification
+21Weekly View
+12Monthly View
 22Notes
 22History
 12Clock
 22Alarm
+22Multi-User-Support

@@ -10,7 +10,7 @@
 						a simple windows like calculator
 					</description>
 				</feature>
-				<and mandatory="true" name="Calendar">
+				<and abstract="true" mandatory="true" name="Calendar">
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
@@ -29,8 +29,9 @@
 									
 								</description>
 							</feature>
+							<feature mandatory="true" name="Markdown"/>
 						</or>
-						<or abstract="true" name="I/O">
+						<or abstract="true" name="Import-Export">
 							<description>
 								Basic I/O operations for import from and export to different calendar formats.
 							</description>
@@ -43,20 +44,17 @@
 							</description>
 							<feature mandatory="true" name="Email"/>
 							<feature mandatory="true" name="Facebook"/>
+							<feature mandatory="true" name="Twitter"/>
+							<feature mandatory="true" name="LinkedIn"/>
 						</or>
-						<feature name="Reminder"/>
+						<or abstract="true" name="Reminder">
+							<feature mandatory="true" name="PopUp"/>
+							<feature mandatory="true" name="Email-Notification"/>
+						</or>
 					</and>
+					<feature mandatory="true" name="Weekly View"/>
+					<feature name="Monthly View"/>
 				</and>
-				<or abstract="true" name="Chat">
-					<description>
-						Chat function with a possibility for several protocols.
-					</description>
-					<feature mandatory="true" name="IRC">
-						<description>
-							IRC protocol
-						</description>
-					</feature>
-				</or>
 				<and name="Notes">
 					<description>
 						Function for quick notes (like one note)
@@ -73,6 +71,7 @@
 					</description>
 					<feature name="Alarm"/>
 				</and>
+				<feature name="Multi-User-Support"/>
 			</and>
 		</struct>
 		<constraints/>
