@@ -2,12 +2,12 @@
 # 0 = deselected, 1 = selected, 2 = undefined
 21jOrganizer
 12Calculator
-11Calendar
+21Calendar
 11Meetings
 21Print
 12HTML
 12PDF
-12Plain
+11Plain
 12Markdown
 21Import-Export
 12CSV
@@ -17,13 +17,12 @@
 12Facebook
 12Twitter
 12LinkedIn
-11Reminder
+21Reminder
 12PopUp
-12Email-Notification
-21Weekly View
-12Monthly View
+12Text
 11Notes
 12History
 11Clock
-12Alarm
+11Alarm
+12Sound
 12Multi-User-Support

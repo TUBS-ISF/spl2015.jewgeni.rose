@@ -3,78 +3,120 @@
 		<struct>
 			<and abstract="true" mandatory="true" name="jOrganizer">
 				<description>
-					JOrganizer app organizes your daily needs!
+					jOrganizer app organizes your daily needs! 
+					Simple command line based tool basically for 
+					organizing meetings. Some main features are 
+					print/import/export the schedule of an user.
 				</description>
 				<feature name="Calculator">
 					<description>
-						a simple windows like calculator
+						A powerful command line calculator.
 					</description>
 				</feature>
 				<and abstract="true" mandatory="true" name="Calendar">
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
-					<and name="Meetings">
+					<and mandatory="true" name="Meetings">
 						<description>
-							Enables the function to enter meetings or appointments for a specifical date and time. Consists of a meeting title, date, time, place and a remark.
+							Enables the function to create, change and delete meetings/appointments. 
+							A meeting consists of a unique title, date, time and duration, a place and remark.
 						</description>
-						<or abstract="true" name="Print">
+						<and abstract="true" name="Print">
 							<description>
-								Print function. For example, could the user print the current view (or a specifical section) as a PDF or HTML document.
+								Print function for meetings. Possible output formats would be 
+								pdf, html, markdown or plain text documents.
 							</description>
-							<feature mandatory="true" name="HTML"/>
-							<feature mandatory="true" name="PDF"/>
+							<feature name="HTML"/>
+							<feature name="PDF"/>
 							<feature mandatory="true" name="Plain">
 								<description>
 									
 								</description>
 							</feature>
-							<feature mandatory="true" name="Markdown"/>
-						</or>
+							<feature name="Markdown"/>
+						</and>
 						<or abstract="true" name="Import-Export">
 							<description>
-								Basic I/O operations for import from and export to different calendar formats.
+								Basic I/O operations for import from and export to 
+								different (calendar) formats.
 							</description>
 							<feature mandatory="true" name="CSV"/>
 							<feature mandatory="true" name="iCalendar"/>
 						</or>
 						<or abstract="true" name="Share">
 							<description>
-								Share function (like modern "share buttons") with a possibility for several protocols. The basic protocol to share would be via email.
+								Share function (like modern social media "share buttons") 
+								with a possibility for several share protocols. 
 							</description>
-							<feature mandatory="true" name="Email"/>
+							<feature mandatory="true" name="Email">
+								<description>
+									 
+								</description>
+							</feature>
 							<feature mandatory="true" name="Facebook"/>
 							<feature mandatory="true" name="Twitter"/>
 							<feature mandatory="true" name="LinkedIn"/>
 						</or>
 						<or abstract="true" name="Reminder">
-							<feature mandatory="true" name="PopUp"/>
-							<feature mandatory="true" name="Email-Notification"/>
+							<description>
+								This feature is basically the alarm function adapted to meetings.
+							</description>
+							<feature mandatory="true" name="Sound-Reminder">
+								<description>
+									 
+								</description>
+							</feature>
+							<feature mandatory="true" name="Mute-Reminder">
+								<description>
+									 
+								</description>
+							</feature>
 						</or>
 					</and>
-					<feature mandatory="true" name="Weekly View"/>
-					<feature name="Monthly View"/>
 				</and>
 				<and name="Notes">
 					<description>
-						Function for quick notes (like one note)
+						Function for quick notes (like one note) or a todo-list. 
+						Will be displayed next to the pending meetings.
 					</description>
 					<feature name="History">
 						<description>
-							History function for storing more than one note.
+							History function for storing and displaying old notes.
 						</description>
 					</feature>
 				</and>
 				<and name="Clock">
 					<description>
-						Simple digital clock function.
+						Simple digital clock function, shows the current date and time.
 					</description>
-					<feature name="Alarm"/>
+					<and name="Alarm">
+						<description>
+							Alarm feature. Depends on clock function. 
+							Opens a graphical PopUp with a user defined message.
+						</description>
+						<feature name="Sound">
+							<description>
+								Play a sound in a graphical PopUp.
+							</description>
+						</feature>
+					</and>
 				</and>
-				<feature name="Multi-User-Support"/>
+				<feature name="Multi-User-Support">
+					<description>
+						Support for multiple users. 
+					</description>
+				</feature>
 			</and>
 		</struct>
-		<constraints/>
+		<constraints>
+			<rule>
+				<imp>
+					<var>Reminder</var>
+					<var>Alarm</var>
+				</imp>
+			</rule>
+		</constraints>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
 		<comments/>
 		<featureOrder userDefined="false"/>
