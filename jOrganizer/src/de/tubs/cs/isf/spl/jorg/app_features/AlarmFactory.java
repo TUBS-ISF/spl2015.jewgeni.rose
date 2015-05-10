@@ -1,10 +1,12 @@
-package de.tubs.cs.isf.spl.jorg.soft_features;
+package de.tubs.cs.isf.spl.jorg.app_features;
+
+import static de.tubs.cs.isf.spl.jorg.App.app;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Locale;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,16 +23,44 @@ import de.tubs.cs.isf.spl.jorg.Feature;
  *
  * @author rose
  */
-public class Alarm extends Feature implements Runnable {
+public class AlarmFactory extends Feature {
+
+    public AlarmFactory(final String key) {
+        this(key, key);
+    }
+
+    public AlarmFactory(final String key, final String desc) {
+        super(key, desc);
+    }
+
+    @Override
+    public void action() {
+        app().println("Setting up alarm ... ", key);
+        app().print("Date [2015-04-30]: ");
+        final String dateStr = app().readLine();
+
+        app().print("Start [08:00]: ");
+        final String beginStr = app().readLine();
+
+        app().print("Sleep time [min]: ");
+        final String mins = app().readLine();
+        Duration duration = Duration.ofMinutes(5);
+        if (mins != null && !mins.isEmpty()) {
+            duration = Duration.ofMinutes(Long.parseLong(mins));
+        }
+        final LocalDateTime date = LocalDateTime.parse(dateStr + "T" + beginStr + ":00",
+                                                       DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        new Alarm(date, duration).run();
+    }
+}
+
+class Alarm implements Runnable {
 
     private LocalDateTime time;
     private final Duration sleep;
 
-    public Alarm(final LocalDateTime time) {
-        this(time, Duration.ofMinutes(5));
-    }
-
-    public Alarm(final LocalDateTime time, final Duration sleep) {
+    Alarm(final LocalDateTime time, final Duration sleep) {
         if (LocalDateTime.now().isAfter(time)) {
             throw new IllegalArgumentException("Event is already over!");
         }
@@ -38,20 +68,10 @@ public class Alarm extends Feature implements Runnable {
         this.time = time;
     }
 
-    @Override
-    public void action() {
-        run();
-    }
-
-    @Override
-    public String menuKey() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     private boolean play() {
-		Sequencer sequencer = null;
-		try {
-			sequencer = MidiSystem.getSequencer();
+        Sequencer sequencer = null;
+        try {
+            sequencer = MidiSystem.getSequencer();
             Sequence sequence = MidiSystem.getSequence(new File("media/sunshine.mid"));
 
             sequencer.open();
@@ -59,7 +79,6 @@ public class Alarm extends Feature implements Runnable {
 
             sequencer.start();
 
-            Locale.setDefault(Locale.ENGLISH);
             if (JOptionPane.showConfirmDialog(null, "Sleep for another " + sleep.toMinutes() + " minutes?",
                                               "Alarm", JOptionPane.OK_OPTION) == JOptionPane.YES_OPTION) {
                 return true;
@@ -71,10 +90,10 @@ public class Alarm extends Feature implements Runnable {
             Logger.getLogger(Alarm.class.getName()).log(Level.SEVERE, null, ex);
         } catch (final MidiUnavailableException ex) {
             Logger.getLogger(Alarm.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
-			if (sequencer != null) {
-				sequencer.close();
-			}
+        } finally {
+            if (sequencer != null) {
+                sequencer.close();
+            }
         }
         return false;
     }
@@ -95,10 +114,5 @@ public class Alarm extends Feature implements Runnable {
                 Logger.getLogger(Alarm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    @Override
-    public String title() {
-        return "Alarm";
     }
 }

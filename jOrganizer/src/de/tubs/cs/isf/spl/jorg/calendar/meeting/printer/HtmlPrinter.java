@@ -1,4 +1,4 @@
-package de.tubs.cs.isf.spl.jorg.calendar.printer;
+package de.tubs.cs.isf.spl.jorg.calendar.meeting.printer;
 
 import de.tubs.cs.isf.spl.jorg.calendar.meeting.Meeting;
 
@@ -9,7 +9,7 @@ import de.tubs.cs.isf.spl.jorg.calendar.meeting.Meeting;
 public class HtmlPrinter extends MarkdownPrinter {
 
     @Override
-    public void print(final Meeting m, final String pathToFile) {
-
+    protected String format(final Meeting m) {
+        return null;
     }
 }

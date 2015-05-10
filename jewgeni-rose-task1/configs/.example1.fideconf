@@ -1,9 +1,10 @@
 # Lists all features from the model with manual (first digit) and automatic (second digit) selection
 # 0 = deselected, 1 = selected, 2 = undefined
 21jOrganizer
+12Clock
+12Multi-User-Support
 22Calculator
-21Calendar
-11Meetings
+21MeetingCalendar
 21Print
 12HTML
 12PDF
@@ -17,12 +18,9 @@
 22Facebook
 22Twitter
 22LinkedIn
-21Reminder
-12Sound-Reminder
-12Mute-Reminder
+11Reminder
+12ReminderWithSound
 11Notes
-12History
-21Clock
-21Alarm
-22Sound
-12Multi-User-Support
+12NotesWithHistory
+12Alarm
+22AlarmWithSound

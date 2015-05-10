@@ -37,4 +37,9 @@ public class User {
         final User other = (User) obj;
         return Objects.equals(this.name, other.name);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

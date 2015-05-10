@@ -6,13 +6,25 @@ package de.tubs.cs.isf.spl.jorg;
  */
 public abstract class Feature {
 
-	public String description() {
-        return title();
+    protected final String key, desc;
+
+    protected Feature(final String key) {
+        this.desc = getClass().getName();
+        this.key = key;
     }
 
-	public abstract String menuKey();
+    protected Feature(final String key, final String desc) {
+        this.key = key;
+        this.desc = desc;
+    }
 
-	public abstract String title();
+    public String description() {
+        return desc;
+    }
 
-	public abstract void action();
+    public String menuKey() {
+        return key;
+    }
+
+    public abstract void action();
 }
