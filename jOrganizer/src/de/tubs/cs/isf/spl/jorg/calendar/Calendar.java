@@ -5,9 +5,8 @@ import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.PROMPT_CLEAR;
 import static de.tubs.cs.isf.spl.jorg.App.app;
 import de.tubs.cs.isf.spl.jorg.Feature;
-import de.tubs.cs.isf.spl.jorg.calendar.meeting.Meeting;
-import de.tubs.cs.isf.spl.jorg.calendar.meeting.printer.PrintMenu;
-import de.tubs.cs.isf.spl.jorg.calendar.meeting.reminder.ReminderMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.printer.PrintMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +19,7 @@ import java.util.TreeSet;
  *
  * @author rose
  */
-public class Calendar extends Feature {
+public final class Calendar extends Feature {
 
     private static final String CALENDAR_FEATURE_PRINT = "print";
     private static final String CALENDAR_FEATURE_REMIND = "reminder";

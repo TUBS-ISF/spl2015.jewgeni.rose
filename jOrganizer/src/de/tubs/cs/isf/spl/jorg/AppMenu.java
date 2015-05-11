@@ -19,9 +19,20 @@ public class AppMenu {
 
     private final List<Feature> features;
     private final String menuString;
+    private UserMenu userSystem;
 
     public AppMenu(final Properties props) {
         features = new ArrayList<Feature>();
+        // non-optional features
+        features.add(new Quit(FEATURE_QUIT, props.getProperty(FEATURE_QUIT)));
+        final Calendar cal = new Calendar(FEATURE_CALENDAR, props.getProperty(FEATURE_CALENDAR));
+        app().print("Enter your name: ");
+        final String name = app().readLine();
+        final User user = new User(name, cal);
+        userSystem = new UserMenu(FEATURE_MULTI_USER, FEATURE_MULTI_USER);
+        userSystem.init(user);
+        features.add(cal);
+
         for (final String key : props.stringPropertyNames()) {
             if (FEATURE_ALARM.equals(key)) {
                 features.add(new AlarmFactory(key, props.getProperty(key)));
@@ -32,11 +43,9 @@ public class AppMenu {
             } else if (FEATURE_NOTES.equals(key)) {
                 features.add(new Notes(key, props.getProperty(key)));
             } else if (FEATURE_MULTI_USER.equals(key)) {
-                features.add(new UserSystem(key, props.getProperty(key)));
-            } else if (FEATURE_QUIT.equals(key)) {
-                features.add(new Quit(key, props.getProperty(key)));
-            } else if (FEATURE_CALENDAR.equals(key)) {
-                features.add(new Calendar(key, props.getProperty(key)));
+                final UserMenu sys = new UserMenu(key, props.getProperty(key), userSystem, features);
+                userSystem = sys;
+                features.add(sys);
             }
         }
         final StringBuilder sb = new StringBuilder();
@@ -46,6 +55,10 @@ public class AppMenu {
             sb.append(keyStr).append(f.description()).append("\n");
         }
         menuString = sb.toString();
+    }
+
+    public User currentUser() {
+        return userSystem.current();
     }
 
     public void choose(final String key) {

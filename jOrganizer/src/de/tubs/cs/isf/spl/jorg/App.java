@@ -51,10 +51,10 @@ public class App {
     private static App INSTANCE = null;
 
     private final AppMenu menu;
-    private final UserSystem defaultUser;
     private final Scanner reader;
 
     public App(final String path) {
+        Locale.setDefault(Locale.ENGLISH);
         Properties p = new Properties();
         Reader r = null;
         try {
@@ -73,16 +73,13 @@ public class App {
         }
         reader = new Scanner(System.in);
         menu = new AppMenu(p);
-        defaultUser = new UserSystem(path);
-        Locale.setDefault(Locale.ENGLISH);
     }
 
     public Calendar calendar() {
-        return defaultUser.current().getCalendar();
+        return menu.currentUser().getCalendar();
     }
 
     public void run() {
-        defaultUser.add();
         String input;
         while (true) {
             println(PROMPT_CLEAR);
@@ -99,7 +96,7 @@ public class App {
         } else {
             feat = "@jOrg> ";
         }
-        return PROMPT_BOLD_BLUE + defaultUser.current() + PROMPT_BOLD_WHITE + feat + PROMPT_NORMAL;
+        return PROMPT_BOLD_BLUE + menu.currentUser() + PROMPT_BOLD_WHITE + feat + PROMPT_NORMAL;
     }
 
     public App println(final Object obj, final String key) {
@@ -158,16 +155,16 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-//        String config = "";
-//        if (args.length == 0) {
-//            config = "default.properties";
-//        } else if (args.length == 1) {
-//            config = args[0];
-//        } else {
-//            System.err.println("usage: java -jar jOrganizer <pathToConfigFile>");
-//            System.exit(0);
-//        }
-//        INSTANCE = new App(config);
-//        INSTANCE.run();
+        String config = "";
+        if (args.length == 0) {
+            config = "default.properties";
+        } else if (args.length == 1) {
+            config = args[0];
+        } else {
+            System.err.println("usage: java -jar jOrganizer <pathToConfigFile>");
+            System.exit(0);
+        }
+        INSTANCE = new App(config);
+        INSTANCE.run();
     }
 }
