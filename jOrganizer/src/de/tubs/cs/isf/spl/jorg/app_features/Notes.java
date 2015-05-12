@@ -34,7 +34,7 @@ public class Notes extends Feature {
         this.historyMode = App.CONFIG.getProperty(HISTORY) != null;
 
         final StringBuilder sb = new StringBuilder();
-        sb.append("notes menu:\n");
+        sb.append(App.PROMPT_BOLD + "notes menu:\n" + App.PROMPT_NORMAL);
         sb.append(String.format("%10s - exits notes menu\n", "[" + EXIT + "]"));
         sb.append(String.format("%10s - add a new note\n", "[" + ADD_NOTE + "]"));
         sb.append(String.format("%10s - view last note\n", "[" + VIEW_LAST_NOTE + "]"));

@@ -18,11 +18,16 @@ import java.util.Properties;
 public class AppMenu {
 
     private final List<Feature> features;
-    private final String menuString;
+    private final Properties props;
+    private String menuString;
     private UserMenu userSystem;
 
     public AppMenu(final Properties props) {
+        this.props = props;
         features = new ArrayList<Feature>();
+    }
+
+    public void init() {
         // non-optional features
         features.add(new Quit(FEATURE_QUIT, props.getProperty(FEATURE_QUIT)));
         final Calendar cal = new Calendar(FEATURE_CALENDAR, props.getProperty(FEATURE_CALENDAR));
@@ -49,7 +54,7 @@ public class AppMenu {
             }
         }
         final StringBuilder sb = new StringBuilder();
-        sb.append("main menu:\n");
+        sb.append(App.PROMPT_BOLD + "main menu:\n" + App.PROMPT_NORMAL);
         for (final Feature f : features) {
             String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
             sb.append(keyStr).append(f.description()).append("\n");
@@ -58,6 +63,9 @@ public class AppMenu {
     }
 
     public User currentUser() {
+        if (userSystem == null) {
+            return null;
+        }
         return userSystem.current();
     }
 

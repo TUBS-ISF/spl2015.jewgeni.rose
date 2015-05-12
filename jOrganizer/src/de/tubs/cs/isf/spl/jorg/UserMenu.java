@@ -41,7 +41,7 @@ public class UserMenu extends Feature {
         this.features = features;
 
         final StringBuilder sb = new StringBuilder();
-        sb.append("user menu:\n");
+        sb.append(App.PROMPT_BOLD + "user menu:\n" + App.PROMPT_NORMAL);
         sb.append(String.format("%10s - exits user menu\n", "[" + EXIT + "]"));
         sb.append(String.format("%10s - add a new user\n", "[" + ADD_USER + "]"));
         sb.append(String.format("%10s - remove a user\n", "[" + REMOVE_USER + "]"));

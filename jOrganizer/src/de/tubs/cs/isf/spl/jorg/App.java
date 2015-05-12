@@ -3,6 +3,7 @@ package de.tubs.cs.isf.spl.jorg;
 import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.Locale;
@@ -20,13 +21,13 @@ public class App {
     /*
      * Prompt formatter strings.
      */
-    public static final String PROMPT_ERROR = "\\033[47m\\033[31m";
-    public static final String PROMPT_BOLD_BLUE = "\\033[1m\\033[34m";
-    public static final String PROMPT_BOLD_WHITE = "\\033[1m\\033[37m";
-    public static final String PROMPT_WHITE = "\\033[37m";
-    public static final String PROMPT_BOLD = "\\033[1m";
-    public static final String PROMPT_NORMAL = "\\033[0m";
-    public static final String PROMPT_CLEAR = "\\0033\\0143";
+    public static final String PROMPT_ERROR = "\033[47m\033[31m";
+    public static final String PROMPT_BOLD_BLUE = "\033[1m\033[34m";
+    public static final String PROMPT_BOLD_WHITE = "\033[1m\033[37m";
+    public static final String PROMPT_WHITE = "\033[37m";
+    public static final String PROMPT_BOLD = "\033[1m";
+    public static final String PROMPT_NORMAL = "\033[0m";
+    public static final String PROMPT_CLEAR = "\0033\0143";
 
     /*
      * first level features.
@@ -58,7 +59,12 @@ public class App {
         Properties p = new Properties();
         Reader r = null;
         try {
-            r = new FileReader(path);
+            if (path == null) {
+                r = new InputStreamReader(getClass().getClassLoader().getResource("resources/default.properties").
+                    openStream());
+            } else {
+                r = new FileReader(path);
+            }
             p.load(r);
             CONFIG.putAll(p);
         } catch (final IOException ex) {
@@ -75,11 +81,19 @@ public class App {
         menu = new AppMenu(p);
     }
 
+    public User currentUser() {
+        if (menu == null) {
+            return null;
+        }
+        return menu.currentUser();
+    }
+
     public Calendar calendar() {
-        return menu.currentUser().getCalendar();
+        return currentUser().getCalendar();
     }
 
     public void run() {
+        menu.init();
         String input;
         while (true) {
             println(PROMPT_CLEAR);
@@ -96,7 +110,7 @@ public class App {
         } else {
             feat = "@jOrg> ";
         }
-        return PROMPT_BOLD_BLUE + menu.currentUser() + PROMPT_BOLD_WHITE + feat + PROMPT_NORMAL;
+        return PROMPT_BOLD_BLUE + currentUser() + PROMPT_BOLD_WHITE + feat + PROMPT_NORMAL;
     }
 
     public App println(final Object obj, final String key) {
@@ -155,15 +169,11 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
-        String config = "";
-        if (args.length == 0) {
-            config = "default.properties";
-        } else if (args.length == 1) {
-            config = args[0];
-        } else {
+        if (args.length > 1) {
             System.err.println("usage: java -jar jOrganizer <pathToConfigFile>");
             System.exit(0);
         }
+        final String config = args.length == 1 ? args[0] : null;
         INSTANCE = new App(config);
         INSTANCE.run();
     }

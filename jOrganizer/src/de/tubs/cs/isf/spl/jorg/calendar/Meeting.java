@@ -84,14 +84,15 @@ public class Meeting implements Comparable<Meeting> {
         String remind = "";
 
         if (reminder != null) {
-            remind = "Reminder: \t" + reminder.toString();
+            remind = "Reminder:    " + reminder.toString() + "\n";
         }
-        return String.format("Title: \t\t%s%n"
-            + "Description: \t%s%n"
-            + "Date: \t\t%3$te. %3$tB %3$tY"
-            + "Start: \t\t%3$tR Uhr%n"
-            + "End: \t\t%4$"
-            + "Place: \t\t%5$s%n"
-            + "%6$s%n", title, note, date, date.plus(duration), place, remind);
+        return String.format(""
+            + "Title:       %1$s%n"
+            + "Description: %2$s%n"
+            + "Date:        %3$te. %3$tB %3$tY%n"
+            + "Start:       %3$tR%n"
+            + "End:         %4$tR%n"
+            + "Place:       %5$s%n"
+            + "%6$s", title, note, date, date.plus(duration), place, remind);
     }
 }

@@ -1,5 +1,6 @@
 package de.tubs.cs.isf.spl.jorg.calendar.reminder;
 
+import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.PROMPT_CLEAR;
 import static de.tubs.cs.isf.spl.jorg.App.app;
@@ -33,7 +34,7 @@ public final class ReminderMenu extends Feature {
         withSound = SOUND_REMINDER.equals(reminder);
 
         final StringBuilder sb = new StringBuilder();
-        sb.append("reminder menu:\n");
+        sb.append(App.PROMPT_BOLD + "reminder menu:\n" + App.PROMPT_NORMAL);
         sb.append(String.format("%10s - exits reminder menu\n", "[" + EXIT + "]"));
         sb.append(String.format("%10s - add a reminder\n", "[" + ADD_REMINDER + "]"));
         sb.append(String.format("%10s - remove a reminder\n", "[" + REMOVE_REMINDER + "]"));

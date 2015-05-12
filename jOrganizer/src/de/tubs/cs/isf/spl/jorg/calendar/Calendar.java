@@ -1,10 +1,12 @@
 package de.tubs.cs.isf.spl.jorg.calendar;
 
+import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.PROMPT_CLEAR;
 import static de.tubs.cs.isf.spl.jorg.App.app;
 import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.User;
 import de.tubs.cs.isf.spl.jorg.calendar.printer.PrintMenu;
 import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
 import java.time.Duration;
@@ -25,6 +27,11 @@ public final class Calendar extends Feature {
     private static final String CALENDAR_FEATURE_REMIND = "reminder";
     private static final String CALENDAR_FEATURE_IM_EXPORT = "im-export";
     private static final String CALENDAR_FEATURE_SHARE = "share";
+
+    private static final String ADD_MEETING = "add";
+    private static final String REMOVE_MEETING = "remove";
+    private static final String CHANGE_MEETING = "change";
+    private static final String LIST_MEETINGS = "list";
 
     private final List<Feature> features;
     private final Set<Meeting> meetings;
@@ -55,8 +62,12 @@ public final class Calendar extends Feature {
         }
 
         final StringBuilder sb = new StringBuilder();
-        sb.append("calendar menu:\n");
-        sb.append(String.format("%10s - Exits calendar menu\n", "[exit]"));
+        sb.append(App.PROMPT_BOLD + "calendar menu:\n" + App.PROMPT_NORMAL);
+        sb.append(String.format("%10s - Exits calendar menu\n", "[" + App.EXIT + "]"));
+        sb.append(String.format("%10s - Add a new meeting\n", "[" + ADD_MEETING + "]"));
+        sb.append(String.format("%10s - Remove an existing meeting\n", "[" + REMOVE_MEETING + "]"));
+        sb.append(String.format("%10s - Change an existing meeting\n", "[" + CHANGE_MEETING + "]"));
+        sb.append(String.format("%10s - Show all meetings\n", "[" + LIST_MEETINGS + "]"));
         for (final Feature f : features) {
             String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
             sb.append(keyStr).append(f.description()).append("\n");
@@ -73,8 +84,17 @@ public final class Calendar extends Feature {
             input = app().readLine();
             if (EXIT.equals(input)) {
                 break;
+            } else if (ADD_MEETING.equals(input)) {
+                addNewMeeting();
+            } else if (REMOVE_MEETING.equals(input)) {
+                deleteMeeting();
+            } else if (CHANGE_MEETING.equals(input)) {
+                changeMeeting();
+            } else if (LIST_MEETINGS.equals(input)) {
+                list();
+            } else {
+                chooseFeature(input);
             }
-            chooseFeature(input);
         }
     }
 
@@ -107,10 +127,21 @@ public final class Calendar extends Feature {
         final String dateStr = app().readLine();
 
         app().print("Start [08:00]: ");
-        final String beginStr = app().readLine();
+        String beginStr = app().readLine();
+        final Duration duration;
 
-        app().print("Time in min: ");
-        final Duration duration = Duration.ofMinutes(Long.parseLong(app().readLine()));
+        if (beginStr.isEmpty()) {
+            beginStr = "00:00";
+            duration = Duration.ofHours(23).plus(Duration.ofMinutes(59));
+        } else {
+            app().print("Time in min: ");
+            final String minStr = app().readLine();
+            if (minStr.isEmpty()) {
+                duration = Duration.ofMinutes(90);
+            } else {
+                duration = Duration.ofMinutes(Long.parseLong(minStr));
+            }
+        }
 
         final LocalDateTime date = LocalDateTime.parse(dateStr + "T" + beginStr + ":00",
                                                        DateTimeFormatter.ISO_LOCAL_DATE_TIME);
@@ -143,19 +174,13 @@ public final class Calendar extends Feature {
         return null;
     }
 
-    /**
-     * List all meetings.
-     * <p>
-     * @return
-     */
-    @Override
-    public String toString() {
+    private void list() {
         final StringBuilder sb = new StringBuilder();
         sb.append("-------------------------").append("\n");
         for (final Meeting meeting : meetings) {
             sb.append(meeting);
             sb.append("-------------------------").append("\n");
         }
-        return sb.toString();
+        app().println(sb, key);
     }
 }
