@@ -3,10 +3,9 @@ package de.tubs.cs.isf.spl.jorg.calendar;
 import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.PROMPT_CLEAR;
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
+import static de.tubs.cs.isf.spl.jorg.App.sleep;
 import de.tubs.cs.isf.spl.jorg.Feature;
-import de.tubs.cs.isf.spl.jorg.User;
 import de.tubs.cs.isf.spl.jorg.calendar.printer.PrintMenu;
 import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
 import java.time.Duration;
@@ -79,9 +78,9 @@ public final class Calendar extends Feature {
     public void action() {
         String input;
         while (true) {
-            app().println(PROMPT_CLEAR);
-            app().println(menuString, key);
-            input = app().readLine();
+            clear();
+            println(menuString);
+            input = readLine();
             if (EXIT.equals(input)) {
                 break;
             } else if (ADD_MEETING.equals(input)) {
@@ -95,6 +94,7 @@ public final class Calendar extends Feature {
             } else {
                 chooseFeature(input);
             }
+            sleep();
         }
     }
 
@@ -105,37 +105,27 @@ public final class Calendar extends Feature {
                 return;
             }
         }
-        app().printErr("Invalid option!");
+        printErr("Invalid option!");
     }
 
     public void addNewMeeting() {
         if (firstAdd) {
-            app().println(NEW_MEETING, key);
-            app().println("\n", key);
+            println(NEW_MEETING);
             firstAdd = false;
         }
-        app().print("Title: ");
-        final String title = app().readLine();
+        final String title = readLine("Title: ");
+        final String note = readLine("Description: ");
+        final String place = readLine("Place: ");
+        final String dateStr = readLine("Date [2015-04-30]: ");
 
-        app().print("Description: ");
-        final String note = app().readLine();
-
-        app().print("Place: ");
-        final String place = app().readLine();
-
-        app().print("Date [2015-04-30]: ");
-        final String dateStr = app().readLine();
-
-        app().print("Start [08:00]: ");
-        String beginStr = app().readLine();
+        String beginStr = readLine("Start [08:00]: ");
         final Duration duration;
 
         if (beginStr.isEmpty()) {
             beginStr = "00:00";
             duration = Duration.ofHours(23).plus(Duration.ofMinutes(59));
         } else {
-            app().print("Time in min: ");
-            final String minStr = app().readLine();
+            final String minStr = readLine("Time in min: ");
             if (minStr.isEmpty()) {
                 duration = Duration.ofMinutes(90);
             } else {
@@ -147,20 +137,20 @@ public final class Calendar extends Feature {
                                                        DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         final Meeting m = new Meeting(title, note, place, date, duration);
+
+        println("Meeting '" + title + "' added");
         meetings.add(m);
     }
 
     public void changeMeeting() {
-        app().print("Enter the meeting to change: ");
-        final String title = app().readLine();
+        final String title = readLine("Enter the meeting to change: ");
         final Meeting m = findMeeting(title);
         meetings.remove(m);
         addNewMeeting();
     }
 
     public void deleteMeeting() {
-        app().print("Enter the meeting to delete: ");
-        final String title = app().readLine();
+        final String title = readLine("Enter the meeting to delete: ");
         final Meeting m = findMeeting(title);
         meetings.remove(m);
     }
@@ -181,6 +171,6 @@ public final class Calendar extends Feature {
             sb.append(meeting);
             sb.append("-------------------------").append("\n");
         }
-        app().println(sb, key);
+        println(sb);
     }
 }

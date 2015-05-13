@@ -2,8 +2,7 @@ package de.tubs.cs.isf.spl.jorg.app_features;
 
 import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.PROMPT_CLEAR;
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 import de.tubs.cs.isf.spl.jorg.Feature;
 import java.util.Stack;
 
@@ -49,7 +48,7 @@ public class Notes extends Feature {
     public void add(final String title, final String desc) {
         final Note note = new Note(title, desc);
 
-        if (historyMode) {
+        if (!historyMode) {
             notes.clear();
         } else if (notes.contains(note)) {
             notes.remove(note);
@@ -63,57 +62,52 @@ public class Notes extends Feature {
 
     public void view() {
         if (!notes.empty()) {
-            app().println(notes.peek(), key);
+            println(notes.peek());
         }
     }
 
     public void list() {
         final StringBuilder sb = new StringBuilder();
         for (final Note note : notes) {
-            sb.append(note.toString()).append("\n")
-                .append("-----------------------\n");
+            sb.append(note.toString()).append("\n").append("-----------------------\n");
         }
-        app().println(sb, key);
+        println(sb);
     }
 
     @Override
     public void action() {
         String input;
         while (true) {
-            app().println(PROMPT_CLEAR);
-            app().println(menuString, key);
-            input = app().readLine();
+            clear();
+            println(menuString);
+            input = readLine();
 
             if (EXIT.equals(input)) {
                 break;
-            }
-
-            if (ADD_NOTE.equals(input)) {
-                app().print("Title: ", key);
-                final String title = app().readLine();
-
-                app().print("Note: ", key);
-                final String note = app().readLine();
+            } else if (ADD_NOTE.equals(input)) {
+                final String title = readLine("Title: ");
+                final String note = readLine("Note: ");
 
                 add(title, note);
             } else if (VIEW_LAST_NOTE.equals(input)) {
                 view();
-            }
-            if (historyMode) {
+            } else if (historyMode) {
                 if (REMOVE_NOTE.equals(input)) {
-                    app().print("Title: ", key);
-                    final String title = app().readLine();
+                    final String title = readLine("Title: ");
 
                     if (remove(title)) {
-                        app().println("Note successfully removed", key);
+                        println("Note successfully removed");
                     } else {
-                        app().println("There is no such note as '" + title + "'!", key);
+                        println("There is no such note as '" + title + "'!");
                     }
                 } else if (LIST_ALL_NOTES.equals(input)) {
                     list();
+                } else {
+                    printErr("Invalid option");
                 }
+            } else {
+                printErr("Invalid option");
             }
-            app().printErr("Invalid option", key);
         }
     }
 
@@ -151,7 +145,7 @@ public class Notes extends Feature {
         private String note() {
             final StringBuilder sb = new StringBuilder();
             for (int i = 0; i < note.length(); i++) {
-                if (i % 40 == 0) {
+                if ((i + 1) % 40 == 0) {
                     sb.append("\n  ");
                 }
                 sb.append(note.charAt(i));

@@ -1,6 +1,6 @@
 package de.tubs.cs.isf.spl.jorg.calendar.printer;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 
 /**
  *
@@ -8,10 +8,10 @@ import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
  */
 public abstract class Printer {
 
-    void print(final Meeting m) {
-        print(m, null);
+    void print(final Calendar cal) {
+        print(cal, null);
     }
 
-    public abstract void print(final Meeting m, final String pathToFile);
+    public abstract void print(final Calendar cal, final String pathToFile);
 
 }

@@ -2,8 +2,7 @@ package de.tubs.cs.isf.spl.jorg.app_features;
 
 import de.tubs.cs.isf.spl.jorg.App;
 import de.tubs.cs.isf.spl.jorg.Feature;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -21,14 +20,6 @@ public class Clock extends Feature {
 
     @Override
     public void action() {
-        App.app().println("Today is " + currentDate() + " and it's " + currentTime() + " o'clock");
-    }
-
-    private String currentDate() {
-        return LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
-    }
-
-    private String currentTime() {
-        return LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_TIME).substring(0, 5);
+        App.print(String.format("%1$te. %1$tB %1$tY, %1$tR o'clock", LocalDateTime.now()));
     }
 }

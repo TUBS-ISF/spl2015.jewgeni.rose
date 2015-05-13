@@ -1,6 +1,5 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
 import de.tubs.cs.isf.spl.jorg.Feature;
 import org.python.core.PyObject;
 import org.python.util.InteractiveInterpreter;
@@ -28,14 +27,16 @@ public class Calculator extends Feature {
         String input;
         PyObject result;
         while (true) {
-            app().print("", key);
-            input = app().readLine();
+            input = readLine();
             if ("q".equalsIgnoreCase(input) || "quit".equalsIgnoreCase(input)) {
                 interpreter.cleanup();
                 break;
+            } else if (input.matches("^([-+/*]\\d+(\\.\\d+)?)*")) {
+                printErr("Illegal expression!");
+            } else {
+                result = interpreter.eval(input);
+                println(result);
             }
-            result = interpreter.eval(input);
-            app().println(result, key);
         }
     }
 }

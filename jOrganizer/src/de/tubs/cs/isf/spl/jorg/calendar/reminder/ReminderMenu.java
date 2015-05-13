@@ -2,13 +2,15 @@ package de.tubs.cs.isf.spl.jorg.calendar.reminder;
 
 import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.PROMPT_CLEAR;
 import static de.tubs.cs.isf.spl.jorg.App.app;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
+import static de.tubs.cs.isf.spl.jorg.App.sleep;
 import de.tubs.cs.isf.spl.jorg.Feature;
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -42,39 +44,53 @@ public final class ReminderMenu extends Feature {
     }
 
     @Override
+    public void println(final Object obj) {
+        final String subKey = "calendar/" + key;
+        App.println(obj, subKey);
+    }
+
+    @Override
+    public void printErr(final Object obj) {
+        final String subKey = "calendar/" + key;
+        App.printErr(obj, subKey);
+    }
+
+    @Override
+    public String readLine(final String prompt) {
+        final String subKey = "calendar/" + key;
+        return App.readLine(prompt, subKey);
+    }
+
+    @Override
     public void action() {
         String input;
-        final String promptKey = super.key + "/" + key;
         while (true) {
-            app().println(PROMPT_CLEAR);
-            app().println(menuString, promptKey);
-            input = app().readLine();
+            clear();
+            println(menuString);
+            input = readLine();
             if (EXIT.equals(input)) {
                 break;
             } else if (ADD_REMINDER.equals(input)) {
-                app().print("Meeting: ", promptKey);
-                final String meeting = app().readLine();
-
-                app().print("Time in min: ", promptKey);
-                final Duration duration = Duration.ofMinutes(Long.parseLong(app().readLine()));
+                final String meeting = readLine("Meeting: ");
+                final Duration duration = Duration.ofMinutes(Long.parseLong(readLine("Time in min: ")));
 
                 if (add(meeting, duration)) {
-                    app().println("Reminder successfully added to meeting", promptKey);
+                    println("Reminder successfully added to meeting");
                 } else {
-                    app().println("There is no such meeting as '" + meeting + "'!", promptKey);
+                    println("There is no such meeting as '" + meeting + "'!");
                 }
             } else if (REMOVE_REMINDER.equals(input)) {
-                app().print("Meeting: ", promptKey);
-                final String meeting = app().readLine();
+                final String meeting = readLine("Meeting: ");
 
                 if (remove(meeting)) {
-                    app().println("Reminder successfully removed from meeting", promptKey);
+                    println("Reminder successfully removed from meeting");
                 } else {
-                    app().println("There is no such meeting as '" + meeting + "'!", promptKey);
+                    println("There is no such meeting as '" + meeting + "'!");
                 }
             } else {
-                app().printErr("Invalid option", promptKey);
+                printErr("Invalid option");
             }
+            sleep();
         }
     }
 
@@ -85,9 +101,9 @@ public final class ReminderMenu extends Feature {
             if (withSound) {
                 r = new SoundReminder(r);
             }
-            r.run();
             m.changeReminder(r);
             reminders.put(meeting, r);
+            SwingUtilities.invokeLater(r);
             return true;
         }
         return false;

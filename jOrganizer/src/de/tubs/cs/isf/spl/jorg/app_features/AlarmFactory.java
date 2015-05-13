@@ -1,7 +1,5 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -16,6 +14,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import de.tubs.cs.isf.spl.jorg.Feature;
 
@@ -35,15 +34,10 @@ public class AlarmFactory extends Feature {
 
     @Override
     public void action() {
-        app().println("Setting up alarm ... ", key);
-        app().print("Date [2015-04-30]: ");
-        final String dateStr = app().readLine();
-
-        app().print("Start [08:00]: ");
-        final String beginStr = app().readLine();
-
-        app().print("Sleep time [min]: ");
-        final String mins = app().readLine();
+        println("Setting up alarm ... \n");
+        final String dateStr = readLine("Date [2015-04-30]: ");
+        final String beginStr = readLine("Start [08:00]: ");
+        final String mins = readLine("Sleep time [min]: ");
         Duration duration = Duration.ofMinutes(5);
         if (mins != null && !mins.isEmpty()) {
             duration = Duration.ofMinutes(Long.parseLong(mins));
@@ -51,7 +45,7 @@ public class AlarmFactory extends Feature {
         final LocalDateTime date = LocalDateTime.parse(dateStr + "T" + beginStr + ":00",
                                                        DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
-        new Alarm(date, duration).run();
+        SwingUtilities.invokeLater(new Alarm(date, duration));
     }
 }
 

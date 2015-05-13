@@ -1,6 +1,6 @@
 package de.tubs.cs.isf.spl.jorg.calendar.printer;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 
 /**
  *
@@ -9,7 +9,7 @@ import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 public class PdfPrinter extends MarkdownPrinter {
 
     @Override
-    protected String format(final Meeting m) {
+    protected String format(final Calendar cal) {
         return null;
     }
 }

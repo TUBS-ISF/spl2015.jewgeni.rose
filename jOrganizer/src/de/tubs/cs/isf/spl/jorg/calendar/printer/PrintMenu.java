@@ -38,7 +38,7 @@ public final class PrintMenu extends Feature {
         sb.append(String.format("%10s - Exits printer menu\n", "[exit]"));
 //        for (final Feature f : printers) {
 //            String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
-//            sb.append(keyStr).append(f.description()).append("\n");
+//            sb.print(keyStr).print(f.description()).print("\n");
 //        }
         menuString = sb.toString();
 

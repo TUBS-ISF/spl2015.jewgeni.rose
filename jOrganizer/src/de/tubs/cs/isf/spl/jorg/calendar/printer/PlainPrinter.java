@@ -1,6 +1,6 @@
 package de.tubs.cs.isf.spl.jorg.calendar.printer;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,12 +16,12 @@ import java.util.logging.Logger;
 public class PlainPrinter extends Printer {
 
     @Override
-    public void print(final Meeting m, final String path) {
+    public void print(final Calendar cal, final String path) {
         if (path == null) {
-            app().println(format(m));
+            System.out.println(format(cal));
         } else {
             try {
-                Files.write(Paths.get(path), format(m).getBytes(), StandardOpenOption.CREATE_NEW);
+                Files.write(Paths.get(path), format(cal).getBytes(), StandardOpenOption.CREATE_NEW);
             } catch (final IOException ex) {
                 Logger.getLogger(PlainPrinter.class.getName()).log(Level.SEVERE, "Couldn't write into '" + path + "'",
                                                                    ex);
@@ -29,8 +29,8 @@ public class PlainPrinter extends Printer {
         }
     }
 
-    protected String format(final Meeting m) {
-
+    protected String format(final Calendar cal) {
+        // TODO
         return null;
     }
 }
