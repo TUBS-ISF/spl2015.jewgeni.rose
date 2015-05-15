@@ -4,7 +4,6 @@ import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.clear;
-import static de.tubs.cs.isf.spl.jorg.App.sleep;
 import de.tubs.cs.isf.spl.jorg.Feature;
 import de.tubs.cs.isf.spl.jorg.calendar.printer.PrintMenu;
 import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
@@ -29,7 +28,6 @@ public final class Calendar extends Feature {
 
     private static final String ADD_MEETING = "add";
     private static final String REMOVE_MEETING = "remove";
-    private static final String CHANGE_MEETING = "change";
     private static final String LIST_MEETINGS = "list";
 
     private final List<Feature> features;
@@ -65,7 +63,6 @@ public final class Calendar extends Feature {
         sb.append(String.format("%10s - Exits calendar menu\n", "[" + App.EXIT + "]"));
         sb.append(String.format("%10s - Add a new meeting\n", "[" + ADD_MEETING + "]"));
         sb.append(String.format("%10s - Remove an existing meeting\n", "[" + REMOVE_MEETING + "]"));
-        sb.append(String.format("%10s - Change an existing meeting\n", "[" + CHANGE_MEETING + "]"));
         sb.append(String.format("%10s - Show all meetings\n", "[" + LIST_MEETINGS + "]"));
         for (final Feature f : features) {
             String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
@@ -76,10 +73,11 @@ public final class Calendar extends Feature {
 
     @Override
     public void action() {
+        clear();
+        println(menuString);
+
         String input;
         while (true) {
-            clear();
-            println(menuString);
             input = readLine();
             if (EXIT.equals(input)) {
                 break;
@@ -87,14 +85,14 @@ public final class Calendar extends Feature {
                 addNewMeeting();
             } else if (REMOVE_MEETING.equals(input)) {
                 deleteMeeting();
-            } else if (CHANGE_MEETING.equals(input)) {
-                changeMeeting();
             } else if (LIST_MEETINGS.equals(input)) {
                 list();
             } else {
                 chooseFeature(input);
+                clear();
+                println(menuString);
+                App.sleep();
             }
-            sleep();
         }
     }
 
@@ -140,13 +138,6 @@ public final class Calendar extends Feature {
 
         println("Meeting '" + title + "' added");
         meetings.add(m);
-    }
-
-    public void changeMeeting() {
-        final String title = readLine("Enter the meeting to change: ");
-        final Meeting m = findMeeting(title);
-        meetings.remove(m);
-        addNewMeeting();
     }
 
     public void deleteMeeting() {

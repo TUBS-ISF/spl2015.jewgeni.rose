@@ -77,9 +77,9 @@ public class Notes extends Feature {
     @Override
     public void action() {
         String input;
+        clear();
+        println(menuString);
         while (true) {
-            clear();
-            println(menuString);
             input = readLine();
 
             if (EXIT.equals(input)) {

@@ -2,7 +2,6 @@ package de.tubs.cs.isf.spl.jorg;
 
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.clear;
-import static de.tubs.cs.isf.spl.jorg.App.sleep;
 import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 import java.util.List;
 import java.util.Stack;
@@ -50,9 +49,9 @@ public class UserMenu extends Feature {
     @Override
     public void action() {
         String input;
+        clear();
+        println(menuString);
         while (true) {
-            clear();
-            println(menuString);
             input = readLine();
             if (EXIT.equals(input)) {
                 break;
@@ -65,7 +64,6 @@ public class UserMenu extends Feature {
             } else {
                 printErr("Invalid option");
             }
-            sleep();
         }
     }
 

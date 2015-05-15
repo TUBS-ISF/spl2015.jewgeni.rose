@@ -4,7 +4,6 @@ import de.tubs.cs.isf.spl.jorg.App;
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.app;
 import static de.tubs.cs.isf.spl.jorg.App.clear;
-import static de.tubs.cs.isf.spl.jorg.App.sleep;
 import de.tubs.cs.isf.spl.jorg.Feature;
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 import java.time.Duration;
@@ -22,6 +21,7 @@ public final class ReminderMenu extends Feature {
     private static final String ADD_REMINDER = "add";
     private static final String REMOVE_REMINDER = "remove";
 
+    private final Duration DEFAULT_REMINDER_TIME = Duration.ofMinutes(30);
     private final Map<String, Reminder> reminders;
     private final String menuString;
     private final boolean withSound;
@@ -63,16 +63,23 @@ public final class ReminderMenu extends Feature {
 
     @Override
     public void action() {
+        clear();
+        println(menuString);
+
         String input;
         while (true) {
-            clear();
-            println(menuString);
             input = readLine();
             if (EXIT.equals(input)) {
                 break;
             } else if (ADD_REMINDER.equals(input)) {
                 final String meeting = readLine("Meeting: ");
-                final Duration duration = Duration.ofMinutes(Long.parseLong(readLine("Time in min: ")));
+                final String time = readLine("Time [30 min]: ");
+                final Duration duration;
+                if (!time.isEmpty()) {
+                    duration = Duration.ofMinutes(Long.parseLong(time));
+                } else {
+                    duration = DEFAULT_REMINDER_TIME;
+                }
 
                 if (add(meeting, duration)) {
                     println("Reminder successfully added to meeting");
@@ -90,7 +97,6 @@ public final class ReminderMenu extends Feature {
             } else {
                 printErr("Invalid option");
             }
-            sleep();
         }
     }
 

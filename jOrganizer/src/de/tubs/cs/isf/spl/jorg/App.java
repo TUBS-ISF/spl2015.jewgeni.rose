@@ -1,6 +1,6 @@
 package de.tubs.cs.isf.spl.jorg;
 
-import de.tubs.cs.isf.spl.jorg.app_features.AlarmFactory;
+import de.tubs.cs.isf.spl.jorg.app_features.AlarmMenu;
 import de.tubs.cs.isf.spl.jorg.app_features.Calculator;
 import de.tubs.cs.isf.spl.jorg.app_features.Clock;
 import de.tubs.cs.isf.spl.jorg.app_features.Notes;
@@ -16,6 +16,7 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.timer.Timer;
 
 /**
  *
@@ -101,7 +102,7 @@ public class App {
 
         for (final String key : properties.stringPropertyNames()) {
             if (FEATURE_ALARM.equals(key)) {
-                features.add(new AlarmFactory(key, properties.getProperty(key)));
+                features.add(new AlarmMenu(key, properties.getProperty(key)));
             } else if (FEATURE_CALCULATOR.equals(key)) {
                 features.add(new Calculator(key, properties.getProperty(key)));
             } else if (FEATURE_CLOCK.equals(key)) {
@@ -236,7 +237,7 @@ public class App {
 
     public static void sleep() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(Timer.ONE_SECOND * 2);
         } catch (InterruptedException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
