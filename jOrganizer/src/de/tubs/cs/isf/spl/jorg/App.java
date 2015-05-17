@@ -30,10 +30,9 @@ public class App {
     public static final String PROMPT_ERROR = "\033[47m\033[31m";
     public static final String PROMPT_BOLD_BLUE = "\033[1m\033[34m";
     public static final String PROMPT_BOLD_WHITE = "\033[1m\033[37m";
-    public static final String PROMPT_WHITE = "\033[37m";
     public static final String PROMPT_BOLD = "\033[1m";
     public static final String PROMPT_NORMAL = "\033[0m";
-    public static final String PROMPT_CLEAR = "\0033\0143";
+    public static final String PROMPT_CLEAR = "\033[H\033[2J";
 
     /*
      * first level features.

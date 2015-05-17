@@ -1,6 +1,7 @@
 package de.tubs.cs.isf.spl.jorg.calendar.printer;
 
 import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
+import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
