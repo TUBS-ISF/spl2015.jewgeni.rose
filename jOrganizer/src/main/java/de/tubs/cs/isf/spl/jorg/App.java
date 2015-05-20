@@ -5,24 +5,20 @@ import de.tubs.cs.isf.spl.jorg.app_features.Calculator;
 import de.tubs.cs.isf.spl.jorg.app_features.Clock;
 import de.tubs.cs.isf.spl.jorg.app_features.Notes;
 import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
+
+import javax.management.timer.Timer;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.management.timer.Timer;
 
 /**
- *
  * @author rose
  */
-public class App {
+public final class App {
 
     /*
      * Prompt formatter strings.
@@ -68,8 +64,8 @@ public class App {
         Reader r = null;
         try {
             if (path == null) {
-                r = new InputStreamReader(getClass().getClassLoader().getResource("resources/default.properties").
-                    openStream());
+                r = new InputStreamReader(getClass().getClassLoader().getResource("default.properties").
+                        openStream());
             } else {
                 r = new FileReader(path);
             }

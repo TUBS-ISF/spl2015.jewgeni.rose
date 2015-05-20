@@ -1,0 +1,27 @@
+defaultTasks 'clean', 'run'
+
+apply plugin: 'application'
+
+sourceCompatibility = 1.5
+mainClassName = 'de.tubs.cs.isf.spl.jorg.App'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.codehaus.groovy:groovy:2.4.3',
+            'org.commonjava.googlecode.markdown4j:markdown4j:2.2-cj-1.0'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.tubs.cs.isf.spl.jorg.App'
+    }
+}
+
+// create binaries on build: directory 'build-->install-->jOrganizer'
+installDist.dependsOn build
+
+apply plugin: "sonar-runner"
