@@ -13,7 +13,7 @@
 						Simple digital clock function, shows the current date and time.
 					</description>
 				</feature>
-				<feature name="Multi-User-Support">
+				<feature name="MultiUserSupport">
 					<description>
 						Support for multiple users.
 					</description>
@@ -41,7 +41,7 @@
 						</feature>
 						<feature name="Markdown"/>
 					</and>
-					<or abstract="true" name="Import-Export">
+					<or abstract="true" name="ImportExport">
 						<description>
 							Basic I/O operations for import from and export to 
 							different (calendar) formats.
