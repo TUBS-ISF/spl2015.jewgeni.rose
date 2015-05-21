@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="task3">
+				<description>
+					jOrganizer app organizes your daily needs! 
+					Simple command line based tool basically for 
+					organizing meetings. Some main features are 
+					print/import/export the schedule of an user.
+				</description>
+				<feature name="Clock">
+					<description>
+						Simple digital clock function, shows the current date and time.
+					</description>
+				</feature>
+				<feature name="MultiUserSupport">
+					<description>
+						Support for multiple users.
+					</description>
+				</feature>
+				<feature name="Calculator">
+					<description>
+						A powerful command line calculator.
+					</description>
+				</feature>
+				<and mandatory="true" name="MeetingCalendar">
+					<description>
+						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
+					</description>
+					<and abstract="true" mandatory="true" name="Print">
+						<description>
+							Print function for meetings. Possible output formats would be 
+							pdf, html, markdown or plain text documents.
+						</description>
+						<feature name="HTML"/>
+						<feature name="PDF"/>
+						<feature mandatory="true" name="Plain">
+							<description>
+								
+							</description>
+						</feature>
+						<feature name="Markdown"/>
+					</and>
+					<or abstract="true" name="ImportExport">
+						<description>
+							Basic I/O operations for import from and export to 
+							different (calendar) formats.
+						</description>
+						<feature mandatory="true" name="CSV"/>
+						<feature mandatory="true" name="iCalendar"/>
+					</or>
+					<or abstract="true" name="Share">
+						<description>
+							Share function (like modern social media "share buttons") 
+							with a possibility for several share protocols.
+						</description>
+						<feature mandatory="true" name="Email">
+							<description>
+								
+							</description>
+						</feature>
+						<feature mandatory="true" name="Facebook"/>
+						<feature mandatory="true" name="Twitter"/>
+						<feature mandatory="true" name="LinkedIn"/>
+					</or>
+					<and name="Reminder">
+						<description>
+							
+						</description>
+						<feature name="ReminderWithSound">
+							<description>
+								
+							</description>
+						</feature>
+					</and>
+				</and>
+				<and name="Notes">
+					<description>
+						Function for quick notes (like one note) or a todo-list. 
+						Will be displayed next to the pending meetings.
+					</description>
+					<feature name="NotesWithHistory">
+						<description>
+							History function for storing and displaying old notes.
+						</description>
+					</feature>
+				</and>
+				<and name="Alarm">
+					<description>
+						Alarm feature. Opens a graphical PopUp with further information.
+					</description>
+					<feature name="AlarmWithSound">
+						<description>
+							Play a sound in a graphical PopUp.
+						</description>
+					</feature>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
