@@ -19,11 +19,10 @@ import java.util.TreeSet;
  *
  * @author rose
  */
-public final class Calendar extends Feature {
+public class Calendar extends Feature {
 
     private static final String CALENDAR_FEATURE_PRINT = "print";
     private static final String CALENDAR_FEATURE_REMIND = "reminder";
-    private static final String CALENDAR_FEATURE_IM_EXPORT = "im-export";
     private static final String CALENDAR_FEATURE_SHARE = "share";
 
     private static final String ADD_MEETING = "add";
@@ -86,7 +85,7 @@ public final class Calendar extends Feature {
             } else if (REMOVE_MEETING.equals(input)) {
                 deleteMeeting();
             } else if (LIST_MEETINGS.equals(input)) {
-                list();
+                println(this);
             } else {
                 chooseFeature(input);
                 clear();
@@ -106,7 +105,7 @@ public final class Calendar extends Feature {
         printErr("Invalid option!");
     }
 
-    public void addNewMeeting() {
+    private void addNewMeeting() {
         if (firstAdd) {
             println(NEW_MEETING);
             firstAdd = false;
@@ -140,7 +139,7 @@ public final class Calendar extends Feature {
         meetings.add(m);
     }
 
-    public void deleteMeeting() {
+    private void deleteMeeting() {
         final String title = readLine("Enter the meeting to delete: ");
         final Meeting m = findMeeting(title);
         meetings.remove(m);
@@ -155,13 +154,18 @@ public final class Calendar extends Feature {
         return null;
     }
 
-    private void list() {
+    public Set<Meeting> meetings() {
+        return meetings;
+    }
+
+    @Override
+    public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("-------------------------").append("\n");
         for (final Meeting meeting : meetings) {
             sb.append(meeting);
             sb.append("-------------------------").append("\n");
         }
-        println(sb);
+        return sb.toString();
     }
 }

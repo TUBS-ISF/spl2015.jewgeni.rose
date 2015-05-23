@@ -1,4 +1,4 @@
-defaultTasks 'clean', 'run'
+defaultTasks 'clean', 'build'
 
 apply plugin: 'application'
 
