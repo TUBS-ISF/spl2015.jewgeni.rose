@@ -6,24 +6,25 @@ Any optional feature can be activated by putting the corresponding feature key i
 ```properties
 # non optional application features
 calendar=calendar function
-quit=exits the application
 
 # optional first level features
 clock=show date and time
 alarm=set up an alarm
 calc=start basic calculator
-notes=write down notes
+notes=write down some notes
 users=advanced user management
 
-# optional second level note features
-history=look up your previous notes
+# impoort and export functions for calendar
+import=ics,csv
+export=md,html,txt,ics,csv
 
-# optional second level calendar features
-print=plain, markdown, html, pdf
-reminder=mute
-#reminder=sound
-im-export=csv, ical
-share=facebook, email, twitter, linkedin
+# reminder
+#reminder=mute
+reminder=sound
+
+# notes history
+history=history function for your notes
+share=facebook,email,twitter,linkedin
 ```
 
 
