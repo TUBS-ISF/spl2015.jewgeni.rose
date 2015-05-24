@@ -1,12 +1,11 @@
 package de.tubs.cs.isf.spl.jorg.calendar;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
 import de.tubs.cs.isf.spl.jorg.Feature;
-import de.tubs.cs.isf.spl.jorg.calendar.printer.PrintMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.exports.ExportMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.imports.ImportMenu;
 import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,13 +14,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
+
 /**
- *
  * @author rose
  */
 public class Calendar extends Feature {
 
-    private static final String CALENDAR_FEATURE_PRINT = "print";
+    private static final String CALENDAR_FEATURE_IMPORT = "import";
+    private static final String CALENDAR_FEATURE_EXPORT = "export";
     private static final String CALENDAR_FEATURE_REMIND = "reminder";
     private static final String CALENDAR_FEATURE_SHARE = "share";
 
@@ -33,11 +36,11 @@ public class Calendar extends Feature {
     private final Set<Meeting> meetings;
     private final String menuString;
     private static final String NEW_MEETING = ""
-        + "-----------------------------------------------------------\n"
-        + "|       Please fill in the following information          |\n"
-        + "|  You can leave out optional fields by pressing <ENTER>  |\n"
-        + "|        You have to enter the title and date!            |\n"
-        + "-----------------------------------------------------------";
+            + "-----------------------------------------------------------\n"
+            + "|       Please fill in the following information          |\n"
+            + "|  You can leave out optional fields by pressing <ENTER>  |\n"
+            + "|        You have to enter the title and date!            |\n"
+            + "-----------------------------------------------------------";
     private boolean firstAdd;
 
     public Calendar(final String key) {
@@ -50,8 +53,10 @@ public class Calendar extends Feature {
         this.firstAdd = true;
         features = new ArrayList<Feature>();
         for (final String feature : CONFIG.stringPropertyNames()) {
-            if (CALENDAR_FEATURE_PRINT.equals(feature)) {
-                features.add(new PrintMenu(feature, CONFIG.getProperty(feature)));
+            if (CALENDAR_FEATURE_IMPORT.equals(feature)) {
+                features.add(new ImportMenu(feature, CONFIG.getProperty(feature)));
+            } else if (CALENDAR_FEATURE_EXPORT.equals(feature)) {
+                features.add(new ExportMenu(feature, CONFIG.getProperty(feature)));
             } else if (CALENDAR_FEATURE_REMIND.equals(feature)) {
                 features.add(new ReminderMenu(feature, CONFIG.getProperty(feature)));
             }
@@ -131,7 +136,7 @@ public class Calendar extends Feature {
         }
 
         final LocalDateTime date = LocalDateTime.parse(dateStr + "T" + beginStr + ":00",
-                                                       DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         final Meeting m = new Meeting(title, note, place, date, duration);
 
@@ -147,7 +152,7 @@ public class Calendar extends Feature {
 
     public Meeting findMeeting(final String title) {
         for (final Meeting m : meetings) {
-            if (m.getTitle().equals(title)) {
+            if (m.title().equals(title)) {
                 return m;
             }
         }

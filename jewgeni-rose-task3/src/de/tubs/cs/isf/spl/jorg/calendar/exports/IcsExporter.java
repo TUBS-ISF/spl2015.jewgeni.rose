@@ -1,4 +1,4 @@
-package de.tubs.cs.isf.spl.jorg.calendar.printer;
+package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
@@ -7,14 +7,14 @@ import static de.tubs.cs.isf.spl.jorg.App.app;
 /**
  * @author rose
  */
-public class iCalPrinter extends Printer {
+public class IcsExporter extends Exporter {
 
-    public iCalPrinter(final String name) {
+    public IcsExporter(final String name) {
         super(name);
     }
 
     @Override
-    public String print() {
+    public String format() {
         final StringBuilder sb = new StringBuilder();
         sb.append("Meetings for '").append(app().currentUser()).append("'\n");
         sb.append("-------------------------------\n\n");

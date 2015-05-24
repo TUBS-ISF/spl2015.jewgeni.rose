@@ -1,20 +1,21 @@
-package de.tubs.cs.isf.spl.jorg.calendar.printer;
+package de.tubs.cs.isf.spl.jorg.calendar.exports;
+
+import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
 import static de.tubs.cs.isf.spl.jorg.App.app;
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
 /**
  *
  * @author rose
  */
-public class PlainPrinter extends Printer {
+public class PlainExporter extends Exporter {
 
-    public PlainPrinter(final String name) {
+    public PlainExporter(final String name) {
         super(name);
     }
 
     @Override
-    public String print() {
+    public String format() {
         final StringBuilder sb = new StringBuilder();
 
         sb.append("Meetings for '").append(app().currentUser()).append("'\n");

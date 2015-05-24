@@ -27,27 +27,28 @@
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
-					<and abstract="true" mandatory="true" name="Print">
+					<or abstract="true" name="Export">
 						<description>
 							Print function for meetings. Possible output formats would be 
 							pdf, html, markdown or plain text documents.
 						</description>
-						<feature name="HTML"/>
-						<feature name="PDF"/>
-						<feature mandatory="true" name="Plain">
+						<feature mandatory="true" name="HTML"/>
+						<feature mandatory="true" name="PlainTXT">
 							<description>
 								
 							</description>
 						</feature>
-						<feature name="Markdown"/>
-					</and>
-					<or abstract="true" name="ImportExport">
+						<feature mandatory="true" name="Markdown"/>
+						<feature mandatory="true" name="CsvExport"/>
+						<feature mandatory="true" name="IcsExport"/>
+					</or>
+					<or abstract="true" name="Import">
 						<description>
 							Basic I/O operations for import from and export to 
 							different (calendar) formats.
 						</description>
-						<feature mandatory="true" name="CSV"/>
-						<feature mandatory="true" name="iCalendar"/>
+						<feature mandatory="true" name="CsvImport"/>
+						<feature mandatory="true" name="IcsImport"/>
 					</or>
 					<or abstract="true" name="Share">
 						<description>
@@ -97,7 +98,14 @@
 				</and>
 			</and>
 		</struct>
-		<constraints/>
+		<constraints>
+			<rule>
+				<imp>
+					<var>HTML</var>
+					<var>Markdown</var>
+				</imp>
+			</rule>
+		</constraints>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
 		<comments/>
 		<featureOrder userDefined="false"/>

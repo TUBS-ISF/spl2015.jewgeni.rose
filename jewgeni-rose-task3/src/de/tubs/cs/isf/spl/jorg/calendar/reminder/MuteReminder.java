@@ -24,7 +24,7 @@ class MuteReminder extends Reminder {
     }
 
     protected void play() {
-        JOptionPane.showMessageDialog(null, "Your meeting '" + meeting.getTitle() + "' is about to begin in " + before.
+        JOptionPane.showMessageDialog(null, "Your meeting '" + meeting.title() + "' is about to begin in " + before.
                                       toHours() + " hours", "Reminder", JOptionPane.OK_OPTION);
     }
 
