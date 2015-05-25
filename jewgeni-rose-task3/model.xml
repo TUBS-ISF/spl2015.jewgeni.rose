@@ -53,7 +53,9 @@
 					<or abstract="true" name="Share">
 						<description>
 							Share function (like modern social media "share buttons") 
-							with a possibility for several share protocols.
+							with a possibility for several share on several social media sites. 
+							Basically the feature creates a html export of the meetings and add
+							share buttons to this site.
 						</description>
 						<feature mandatory="true" name="Email">
 							<description>
@@ -63,6 +65,7 @@
 						<feature mandatory="true" name="Facebook"/>
 						<feature mandatory="true" name="Twitter"/>
 						<feature mandatory="true" name="LinkedIn"/>
+						<feature mandatory="true" name="Google"/>
 					</or>
 					<and name="Reminder">
 						<description>
@@ -101,8 +104,8 @@
 		<constraints>
 			<rule>
 				<imp>
+					<var>Share</var>
 					<var>HTML</var>
-					<var>Markdown</var>
 				</imp>
 			</rule>
 		</constraints>
