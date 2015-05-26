@@ -11,7 +11,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +38,6 @@ public final class App {
      * first level features.
      */
     static final String FEATURE_CALENDAR = "calendar";
-    static final String FEATURE_QUIT = "exit";
     static final String FEATURE_ALARM = "alarm";
     static final String FEATURE_NOTES = "notes";
     static final String FEATURE_CALCULATOR = "calc";

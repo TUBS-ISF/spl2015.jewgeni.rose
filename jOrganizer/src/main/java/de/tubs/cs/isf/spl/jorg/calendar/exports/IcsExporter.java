@@ -4,6 +4,9 @@ import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import static de.tubs.cs.isf.spl.jorg.App.app;
 
@@ -30,13 +33,17 @@ public class IcsExporter extends Exporter {
             sb.append("SUMMARY:").append(m.title()).append("\n");
             sb.append("LOCATION:").append(m.place()).append("\n");
             sb.append("DESCRIPTION:").append(m.note()).append("\n");
-            sb.append("DTSTART:").append(dateFormat.format(m.date())).append("\n");
-            sb.append("DTEND:").append(dateFormat.format(m.date().plus(m.duration()))).append("\n");
+            sb.append("DTSTART:").append(dateFormatter(m.date())).append("\n");
+            sb.append("DTEND:").append(dateFormatter(m.date().plus(m.duration()))).append("\n");
             sb.append("CLASS:PRIVATE").append("\n");
             sb.append("END:VEVENT").append("\n");
         }
         sb.append(FOOTER);
         return sb.toString();
+    }
+
+    private String dateFormatter(final LocalDateTime date) {
+        return dateFormat.format(Date.from(date.atZone(ZoneId.systemDefault()).toInstant()));
     }
 
     private static String generateHeader() {

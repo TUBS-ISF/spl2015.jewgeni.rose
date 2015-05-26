@@ -32,7 +32,24 @@
 							Print function for meetings. Possible output formats would be 
 							pdf, html, markdown or plain text documents.
 						</description>
-						<feature mandatory="true" name="HTML"/>
+						<and mandatory="true" name="HTML">
+							<or abstract="true" name="Share">
+								<description>
+									Share function (like modern social media "share buttons") 
+									with a possibility for several share on several social media sites. 
+									Basically adds social media buttons to the html export.
+								</description>
+								<feature mandatory="true" name="Email">
+									<description>
+										
+									</description>
+								</feature>
+								<feature mandatory="true" name="Facebook"/>
+								<feature mandatory="true" name="Twitter"/>
+								<feature mandatory="true" name="LinkedIn"/>
+								<feature mandatory="true" name="Google"/>
+							</or>
+						</and>
 						<feature mandatory="true" name="PlainTXT">
 							<description>
 								
@@ -49,23 +66,6 @@
 						</description>
 						<feature mandatory="true" name="CsvImport"/>
 						<feature mandatory="true" name="IcsImport"/>
-					</or>
-					<or abstract="true" name="Share">
-						<description>
-							Share function (like modern social media "share buttons") 
-							with a possibility for several share on several social media sites. 
-							Basically the feature creates a html export of the meetings and add
-							share buttons to this site.
-						</description>
-						<feature mandatory="true" name="Email">
-							<description>
-								
-							</description>
-						</feature>
-						<feature mandatory="true" name="Facebook"/>
-						<feature mandatory="true" name="Twitter"/>
-						<feature mandatory="true" name="LinkedIn"/>
-						<feature mandatory="true" name="Google"/>
 					</or>
 					<and name="Reminder">
 						<description>
@@ -101,14 +101,7 @@
 				</and>
 			</and>
 		</struct>
-		<constraints>
-			<rule>
-				<imp>
-					<var>Share</var>
-					<var>HTML</var>
-				</imp>
-			</rule>
-		</constraints>
+		<constraints/>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
 		<comments/>
 		<featureOrder userDefined="false"/>

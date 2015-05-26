@@ -56,7 +56,13 @@ public class Calendar extends Feature {
             if (CALENDAR_FEATURE_IMPORT.equals(feature)) {
                 features.add(new ImportMenu(feature, CONFIG.getProperty(feature)));
             } else if (CALENDAR_FEATURE_EXPORT.equals(feature)) {
-                features.add(new ExportMenu(feature, CONFIG.getProperty(feature)));
+                String sharers = null;
+                for (final String share : CONFIG.stringPropertyNames()) {
+                    if (CALENDAR_FEATURE_SHARE.equals(share)) {
+                        sharers = CONFIG.getProperty(share);
+                    }
+                }
+                features.add(new ExportMenu(feature, CONFIG.getProperty(feature), sharers));
             } else if (CALENDAR_FEATURE_REMIND.equals(feature)) {
                 features.add(new ReminderMenu(feature, CONFIG.getProperty(feature)));
             }

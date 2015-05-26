@@ -2,6 +2,7 @@ package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
 import de.tubs.cs.isf.spl.jorg.App;
 import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.calendar.exports.share.HtmlShareExporter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,14 +25,14 @@ public class ExportMenu extends Feature {
     private final Set<Exporter> exporters;
     private final String menuString;
 
-    public ExportMenu(final String key, final String printrs) {
+    public ExportMenu(final String key, final String printrs, final String sharers) {
         super(key, "export function for meetings");
         exporters = new HashSet<Exporter>();
         for (final String opt : printrs.split(",")) {
-            if (HTML_FORMAT.equals(opt)) {
+            if (HTML_FORMAT.equals(opt) && sharers == null) {
                 exporters.add(new HtmlExporter(HTML_FORMAT));
-                // html implies markdown
-                exporters.add(new MarkdownExporter(MARKDOWN_FORMAT));
+            } else if (HTML_FORMAT.equals(opt)) {
+                exporters.add(new HtmlShareExporter(HTML_FORMAT, sharers));
             } else if (PLAIN_TXT_FORMAT.equals(opt)) {
                 exporters.add(new PlainExporter(PLAIN_TXT_FORMAT));
             } else if (MARKDOWN_FORMAT.equals(opt)) {
