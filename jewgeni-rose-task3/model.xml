@@ -23,7 +23,7 @@
 						A powerful command line calculator.
 					</description>
 				</feature>
-				<and mandatory="true" name="MeetingCalendar">
+				<and mandatory="true" name="Calendar">
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
@@ -32,30 +32,30 @@
 							Print function for meetings. Possible output formats would be 
 							pdf, html, markdown or plain text documents.
 						</description>
-						<and mandatory="true" name="HTML">
+						<and mandatory="true" name="HtmlExport">
 							<or abstract="true" name="Share">
 								<description>
 									Share function (like modern social media "share buttons") 
 									with a possibility for several share on several social media sites. 
 									Basically adds social media buttons to the html export.
 								</description>
-								<feature mandatory="true" name="Email">
+								<feature mandatory="true" name="ShareViaEmail">
 									<description>
 										
 									</description>
 								</feature>
-								<feature mandatory="true" name="Facebook"/>
-								<feature mandatory="true" name="Twitter"/>
-								<feature mandatory="true" name="LinkedIn"/>
-								<feature mandatory="true" name="Google"/>
+								<feature mandatory="true" name="ShareViaFacebook"/>
+								<feature mandatory="true" name="ShareViaTwitter"/>
+								<feature mandatory="true" name="ShareViaLinkedIn"/>
+								<feature mandatory="true" name="ShareViaGoogle"/>
 							</or>
 						</and>
-						<feature mandatory="true" name="PlainTXT">
+						<feature mandatory="true" name="PlainExport">
 							<description>
 								
 							</description>
 						</feature>
-						<feature mandatory="true" name="Markdown"/>
+						<feature mandatory="true" name="MarkdownExport"/>
 						<feature mandatory="true" name="CsvExport"/>
 						<feature mandatory="true" name="IcsExport"/>
 					</or>

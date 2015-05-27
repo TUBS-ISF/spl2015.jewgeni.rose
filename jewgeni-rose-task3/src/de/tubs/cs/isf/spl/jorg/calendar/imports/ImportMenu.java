@@ -1,13 +1,14 @@
+// #condition IMPORT
 package de.tubs.cs.isf.spl.jorg.calendar.imports;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.Feature;
 
 /**
  * @author rose
@@ -15,61 +16,70 @@ import static de.tubs.cs.isf.spl.jorg.App.clear;
  */
 public class ImportMenu extends Feature {
 
-    private static final String ICS_FORMAT = "ics";
-    private static final String CSV_FORMAT = "csv";
+	// #ifdef IcsImport
+	// #define ICS_FORMAT="ics"
+	// #expand private static final String ICS_FORMAT = "%ICS_FORMAT%";
+	private static final String ICS_FORMAT = "ics";
+	// #endif
 
-    private final Set<Importer> importers;
-    private final String menuString;
+	// #ifdef CsvImport
+	// #define CSV_FORMAT="csv"
+	// #expand private static final String CSV_FORMAT = "%CSV_FORMAT%";
+	private static final String CSV_FORMAT = "csv";
+	// #endif
 
-    public ImportMenu(final String key, final String exprts) {
-        super(key, "import function for meetings");
-        importers = new HashSet<Importer>();
-        for (final String opt : exprts.split(",")) {
-            if (ICS_FORMAT.equals(opt)) {
-                importers.add(new IcsImporter(ICS_FORMAT));
-            } else if (CSV_FORMAT.equals(opt)) {
-                importers.add(new CsvImporter(CSV_FORMAT));
-            }
-        }
+	private final Set<Importer> importers;
+	private final String menuString;
 
-        final StringBuilder sb = new StringBuilder();
-        sb.append(App.PROMPT_BOLD + "import menu:\n" + App.PROMPT_NORMAL);
-        sb.append(String.format("%10s - Exits export menu\n", "[exit]"));
-        for (final Importer in : importers) {
-            sb.append(String.format("%10s - %s%n", "[" + in.name() + "]",
-                    "load meetings from file with " + in.name() + "-format (add '_p' for preview only)"));
-        }
-        menuString = sb.toString();
-    }
+	public ImportMenu(final String key, final String desc) {
+		super(key, desc);
+		importers = new HashSet<Importer>();
 
-    @Override
-    public void action() {
-        clear();
-        println(menuString);
+		// #ifdef ICS_FORMAT
+		importers.add(new IcsImporter(ICS_FORMAT));
+		// #endif
 
-        String input;
-        while (true) {
-            input = readLine();
-            if (EXIT.equals(input)) {
-                break;
-            }
-            for (final Importer importer : importers) {
-                if (importer.name().equals(input)) {
-                    final String path = readLine("enter path to data: ");
-                    importer.loadFromFile(path);
-                }
-            }
-        }
-    }
+		// #ifdef CSV_FORMAT
+		importers.add(new CsvImporter(CSV_FORMAT));
+		// #endif
 
+		final StringBuilder sb = new StringBuilder();
+		sb.append(App.PROMPT_BOLD + "import menu:\n" + App.PROMPT_NORMAL);
+		sb.append(String.format("%10s - Exits export menu\n", "[exit]"));
+		for (final Importer in : importers) {
+			sb.append(String.format("%10s - %s%n", "[" + in.name() + "]", "load meetings from file with " + in.name()
+							+ "-format (add '_p' for preview only)"));
+		}
+		menuString = sb.toString();
+	}
 
-    @Override
-    protected void println(final Object obj) {
-        App.println(obj, "calendar/" + key);
-    }
+	@Override
+	public void action() {
+		clear();
+		println(menuString);
 
-    @Override
-    protected String readLine() {
-        return App.readLine("", "calendar/" + key);
-    }
+		String input;
+		while (true) {
+			input = readLine();
+			if (EXIT.equals(input)) {
+				break;
+			}
+			for (final Importer importer : importers) {
+				if (importer.name().equals(input)) {
+					final String path = readLine("enter path to data: ");
+					importer.loadFromFile(path);
+				}
+			}
+		}
+	}
+
+	@Override
+	protected void println(final Object obj) {
+		App.println(obj, "calendar/" + key);
+	}
+
+	@Override
+	protected String readLine() {
+		return App.readLine("", "calendar/" + key);
+	}
 }
