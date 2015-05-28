@@ -8,11 +8,6 @@ public abstract class Feature {
 
     protected final String key, desc;
 
-    protected Feature(final String key) {
-        this.desc = getClass().getName();
-        this.key = key;
-    }
-
     protected Feature(final String key, final String desc) {
         this.key = key;
         this.desc = desc;

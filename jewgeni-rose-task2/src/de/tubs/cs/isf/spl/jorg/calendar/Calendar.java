@@ -1,12 +1,11 @@
 package de.tubs.cs.isf.spl.jorg.calendar;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
 import de.tubs.cs.isf.spl.jorg.Feature;
-import de.tubs.cs.isf.spl.jorg.calendar.printer.PrintMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.exports.ExportMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.imports.ImportMenu;
 import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,15 +14,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
+
 /**
- *
  * @author rose
  */
-public final class Calendar extends Feature {
+public class Calendar extends Feature {
 
-    private static final String CALENDAR_FEATURE_PRINT = "print";
+    private static final String CALENDAR_FEATURE_IMPORT = "import";
+    private static final String CALENDAR_FEATURE_EXPORT = "export";
     private static final String CALENDAR_FEATURE_REMIND = "reminder";
-    private static final String CALENDAR_FEATURE_IM_EXPORT = "im-export";
     private static final String CALENDAR_FEATURE_SHARE = "share";
 
     private static final String ADD_MEETING = "add";
@@ -34,11 +36,11 @@ public final class Calendar extends Feature {
     private final Set<Meeting> meetings;
     private final String menuString;
     private static final String NEW_MEETING = ""
-        + "-----------------------------------------------------------\n"
-        + "|       Please fill in the following information          |\n"
-        + "|  You can leave out optional fields by pressing <ENTER>  |\n"
-        + "|        You have to enter the title and date!            |\n"
-        + "-----------------------------------------------------------";
+            + "-----------------------------------------------------------\n"
+            + "|       Please fill in the following information          |\n"
+            + "|  You can leave out optional fields by pressing <ENTER>  |\n"
+            + "|        You have to enter the title and date!            |\n"
+            + "-----------------------------------------------------------";
     private boolean firstAdd;
 
     public Calendar(final String key) {
@@ -51,8 +53,16 @@ public final class Calendar extends Feature {
         this.firstAdd = true;
         features = new ArrayList<Feature>();
         for (final String feature : CONFIG.stringPropertyNames()) {
-            if (CALENDAR_FEATURE_PRINT.equals(feature)) {
-                features.add(new PrintMenu(feature, CONFIG.getProperty(feature)));
+            if (CALENDAR_FEATURE_IMPORT.equals(feature)) {
+                features.add(new ImportMenu(feature, CONFIG.getProperty(feature)));
+            } else if (CALENDAR_FEATURE_EXPORT.equals(feature)) {
+                String sharers = null;
+                for (final String share : CONFIG.stringPropertyNames()) {
+                    if (CALENDAR_FEATURE_SHARE.equals(share)) {
+                        sharers = CONFIG.getProperty(share);
+                    }
+                }
+                features.add(new ExportMenu(feature, CONFIG.getProperty(feature), sharers));
             } else if (CALENDAR_FEATURE_REMIND.equals(feature)) {
                 features.add(new ReminderMenu(feature, CONFIG.getProperty(feature)));
             }
@@ -86,7 +96,7 @@ public final class Calendar extends Feature {
             } else if (REMOVE_MEETING.equals(input)) {
                 deleteMeeting();
             } else if (LIST_MEETINGS.equals(input)) {
-                list();
+                println(this);
             } else {
                 chooseFeature(input);
                 clear();
@@ -106,7 +116,7 @@ public final class Calendar extends Feature {
         printErr("Invalid option!");
     }
 
-    public void addNewMeeting() {
+    private void addNewMeeting() {
         if (firstAdd) {
             println(NEW_MEETING);
             firstAdd = false;
@@ -132,7 +142,7 @@ public final class Calendar extends Feature {
         }
 
         final LocalDateTime date = LocalDateTime.parse(dateStr + "T" + beginStr + ":00",
-                                                       DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         final Meeting m = new Meeting(title, note, place, date, duration);
 
@@ -140,7 +150,7 @@ public final class Calendar extends Feature {
         meetings.add(m);
     }
 
-    public void deleteMeeting() {
+    private void deleteMeeting() {
         final String title = readLine("Enter the meeting to delete: ");
         final Meeting m = findMeeting(title);
         meetings.remove(m);
@@ -148,20 +158,25 @@ public final class Calendar extends Feature {
 
     public Meeting findMeeting(final String title) {
         for (final Meeting m : meetings) {
-            if (m.getTitle().equals(title)) {
+            if (m.title().equals(title)) {
                 return m;
             }
         }
         return null;
     }
 
-    private void list() {
+    public Set<Meeting> meetings() {
+        return meetings;
+    }
+
+    @Override
+    public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("-------------------------").append("\n");
         for (final Meeting meeting : meetings) {
             sb.append(meeting);
             sb.append("-------------------------").append("\n");
         }
-        println(sb);
+        return sb.toString();
     }
 }

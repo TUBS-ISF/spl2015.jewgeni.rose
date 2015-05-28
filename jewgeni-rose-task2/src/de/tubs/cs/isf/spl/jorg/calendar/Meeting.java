@@ -1,11 +1,11 @@
 package de.tubs.cs.isf.spl.jorg.calendar;
 
 import de.tubs.cs.isf.spl.jorg.calendar.reminder.Reminder;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
- *
  * @author rose
  */
 public class Meeting implements Comparable<Meeting> {
@@ -28,32 +28,24 @@ public class Meeting implements Comparable<Meeting> {
         return date.compareTo(m.date);
     }
 
-    public String getTitle() {
+    public String title() {
         return title;
     }
 
-    public LocalDateTime getDate() {
+    public String place() {
+        return place;
+    }
+
+    public String note() {
+        return note;
+    }
+
+    public Duration duration() {
+        return duration;
+    }
+
+    public LocalDateTime date() {
         return date;
-    }
-
-    public void changeTitle(final String title) {
-        this.title = title;
-    }
-
-    public void changeDescription(final String newDesc) {
-        this.note = newDesc;
-    }
-
-    public void changePlace(final String place) {
-        this.place = place;
-    }
-
-    public void changeDate(final LocalDateTime date) {
-        this.date = date;
-    }
-
-    public void changeDuration(final Duration duration) {
-        this.duration = duration;
     }
 
     public void changeReminder(final Reminder reminder) {
@@ -87,12 +79,12 @@ public class Meeting implements Comparable<Meeting> {
             remind = "Reminder:    " + reminder.toString() + "\n";
         }
         return String.format(""
-            + "Title:       %1$s%n"
-            + "Description: %2$s%n"
-            + "Date:        %3$te. %3$tB %3$tY%n"
-            + "Start:       %3$tR%n"
-            + "End:         %4$tR%n"
-            + "Place:       %5$s%n"
-            + "%6$s", title, note, date, date.plus(duration), place, remind);
+                + "Title:       %1$s%n"
+                + "Description: %2$s%n"
+                + "Date:        %3$te. %3$tB %3$tY%n"
+                + "Start:       %3$tR%n"
+                + "End:         %4$tR%n"
+                + "Place:       %5$s%n"
+                + "%6$s", title, note, date, date.plus(duration), place, remind);
     }
 }

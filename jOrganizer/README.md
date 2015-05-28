@@ -4,7 +4,7 @@
 Any optional feature can be activated by putting the corresponding feature key into the properties file. The values to this keys are, in cases of 'first level features', that means features without a submenu (or rather a sub-submenu such as the `clock`), fully optional and serve merely as descriptions. The values of feature keys with an own submenu, like `print`, represent the according subfeature. You can use the below listed configuration file, which is complete, as a template to create your own configuration by removing (or commenting out) the features you don't need:
 
 ```properties
-# non optional application features
+# non optional application feature
 calendar=calendar function
 
 # optional first level features

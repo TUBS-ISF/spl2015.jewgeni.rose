@@ -1,6 +1,14 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
-import java.io.File;
+import de.tubs.cs.isf.spl.jorg.Feature;
+
+import javax.management.timer.Timer;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
+import javax.swing.*;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -9,19 +17,7 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.management.timer.Timer;
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import de.tubs.cs.isf.spl.jorg.Feature;
-
 /**
- *
  * @author rose
  */
 public class AlarmMenu extends Feature {
@@ -29,10 +25,6 @@ public class AlarmMenu extends Feature {
     private final LocalTime DEFAULT_TIME = LocalTime.of(8, 0);
     private final LocalDate DEFAULT_DATE = LocalDate.now().plusDays(1);
     private final Duration DEFAULT_SLEEP_TIME = Duration.ofMinutes(5);
-
-    public AlarmMenu(final String key) {
-        this(key, key);
-    }
 
     public AlarmMenu(final String key, final String desc) {
         super(key, desc);
@@ -88,15 +80,14 @@ class Alarm implements Runnable {
         Sequencer sequencer = null;
         try {
             sequencer = MidiSystem.getSequencer();
-            Sequence sequence = MidiSystem.getSequence(new File("media/sunshine.mid"));
-
+            Sequence sequence = MidiSystem.getSequence(getClass().getClassLoader().getResource("media/sunshine.mid").openStream());
             sequencer.open();
             sequencer.setSequence(sequence);
 
             sequencer.start();
 
             if (JOptionPane.showConfirmDialog(null, "Sleep for another " + sleep.toMinutes() + " minutes?",
-                                              "Alarm", JOptionPane.OK_OPTION) == JOptionPane.YES_OPTION) {
+                    "Alarm", JOptionPane.OK_OPTION) == JOptionPane.YES_OPTION) {
                 return true;
             }
             sequencer.stop();

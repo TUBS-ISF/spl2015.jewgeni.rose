@@ -1,5 +1,12 @@
 package de.tubs.cs.isf.spl.jorg;
 
+import de.tubs.cs.isf.spl.jorg.app_features.AlarmMenu;
+import de.tubs.cs.isf.spl.jorg.app_features.Calculator;
+import de.tubs.cs.isf.spl.jorg.app_features.Clock;
+import de.tubs.cs.isf.spl.jorg.app_features.Notes;
+import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
+
+import javax.management.timer.Timer;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,14 +18,6 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.management.timer.Timer;
-
-import de.tubs.cs.isf.spl.jorg.app_features.AlarmMenu;
-import de.tubs.cs.isf.spl.jorg.app_features.Calculator;
-import de.tubs.cs.isf.spl.jorg.app_features.Clock;
-import de.tubs.cs.isf.spl.jorg.app_features.Notes;
-import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 
 /**
  * @author rose
@@ -39,7 +38,6 @@ public final class App {
      * first level features.
      */
     static final String FEATURE_CALENDAR = "calendar";
-    static final String FEATURE_QUIT = "exit";
     static final String FEATURE_ALARM = "alarm";
     static final String FEATURE_NOTES = "notes";
     static final String FEATURE_CALCULATOR = "calc";
@@ -69,8 +67,7 @@ public final class App {
         Reader r = null;
         try {
             if (path == null) {
-				r = new InputStreamReader(getClass().getClassLoader().getResource("resources/default.properties")
-								.
+                r = new InputStreamReader(getClass().getClassLoader().getResource("default.properties").
                         openStream());
             } else {
                 r = new FileReader(path);

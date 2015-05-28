@@ -18,7 +18,7 @@ public abstract class Reminder implements Runnable {
     protected Reminder(final Meeting meeting, final Duration before) {
         this.meeting = meeting;
         this.before = before;
-        this.time = meeting.getDate().minus(before);
+        this.time = meeting.date().minus(before);
         this.shutdown = false;
     }
 
