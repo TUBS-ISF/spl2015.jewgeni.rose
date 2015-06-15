@@ -10,10 +10,6 @@ import java.time.LocalDateTime;
  */
 public class Clock extends Feature {
 
-    public Clock(final String key) {
-        this(key, key);
-    }
-
     public Clock(final String key, final String desc) {
         super(key, desc);
     }

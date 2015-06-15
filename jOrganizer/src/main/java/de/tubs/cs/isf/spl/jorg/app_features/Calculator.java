@@ -11,10 +11,6 @@ public class Calculator extends Feature {
 
     private final GroovyShell shell;
 
-    public Calculator(final String key) {
-        this(key, key);
-    }
-
     public Calculator(final String key, final String desc) {
         super(key, desc);
         shell = new GroovyShell();

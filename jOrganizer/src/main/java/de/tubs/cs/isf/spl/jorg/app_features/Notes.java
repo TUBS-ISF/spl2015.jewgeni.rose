@@ -1,10 +1,12 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
 import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.Feature;
+
+import java.util.Stack;
+
 import static de.tubs.cs.isf.spl.jorg.App.EXIT;
 import static de.tubs.cs.isf.spl.jorg.App.clear;
-import de.tubs.cs.isf.spl.jorg.Feature;
-import java.util.Stack;
 
 /**
  *
@@ -22,10 +24,6 @@ public class Notes extends Feature {
     private final Stack<Note> notes;
     private final String menuString;
     private final boolean historyMode;
-
-    public Notes(final String key) {
-        this(key, key);
-    }
 
     public Notes(final String key, final String desc) {
         super(key, desc);

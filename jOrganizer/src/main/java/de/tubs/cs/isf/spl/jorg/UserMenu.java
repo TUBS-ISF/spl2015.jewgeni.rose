@@ -1,10 +1,12 @@
 package de.tubs.cs.isf.spl.jorg;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
 import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
+
 import java.util.List;
 import java.util.Stack;
+
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  *
@@ -19,10 +21,6 @@ public class UserMenu extends Feature {
     private final Stack<User> users;
     private final List<Feature> features;
     private final String menuString;
-
-    public UserMenu(final String key) {
-        this(key, key);
-    }
 
     public UserMenu(final String key, final String desc) {
         this(key, desc, null, null);

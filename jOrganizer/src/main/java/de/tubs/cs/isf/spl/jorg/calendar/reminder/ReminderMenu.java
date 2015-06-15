@@ -1,15 +1,17 @@
 package de.tubs.cs.isf.spl.jorg.calendar.reminder;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.app;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
 import de.tubs.cs.isf.spl.jorg.Feature;
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+
+import javax.swing.*;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.SwingUtilities;
+
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.app;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  *
@@ -25,10 +27,6 @@ public final class ReminderMenu extends Feature {
     private final Map<String, Reminder> reminders;
     private final String menuString;
     private final boolean withSound;
-
-    public ReminderMenu(final String key) {
-        this(key, key);
-    }
 
     public ReminderMenu(final String key, final String reminder) {
         super(key, key);

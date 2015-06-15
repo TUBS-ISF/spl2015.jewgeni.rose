@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'junit:junit:4.11'
     compile 'org.codehaus.groovy:groovy:2.4.3'
 }
 
@@ -20,4 +20,6 @@ jar {
     }
 }
 
-apply plugin: "sonar-runner"
+run {
+	standardInput = System.in
+}
