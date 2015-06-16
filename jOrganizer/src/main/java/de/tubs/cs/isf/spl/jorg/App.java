@@ -7,6 +7,7 @@ import de.tubs.cs.isf.spl.jorg.app_features.Notes;
 import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 
 import javax.management.timer.Timer;
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 /**
  * @author rose
  */
-public final class App {
+public final class App implements Runnable {
 
     /*
      * Prompt formatter strings.
@@ -89,7 +90,7 @@ public final class App {
         features = new ArrayList<Feature>();
     }
 
-    public void init() {
+    private void init() {
         // non-optional feature
         final Calendar cal = new Calendar(FEATURE_CALENDAR, properties.getProperty(FEATURE_CALENDAR));
         final String name = readLine("Enter your name: ");
@@ -130,16 +131,6 @@ public final class App {
         return userSystem.current();
     }
 
-    public void choose(final String key) {
-        for (final Feature feature : features) {
-            if (feature.menuKey().equals(key)) {
-                feature.action();
-                return;
-            }
-        }
-        printErr("Invalid option!");
-    }
-
     public Calendar calendar() {
         if (currentUser() == null) {
             return null;
@@ -161,6 +152,20 @@ public final class App {
             sleep();
         }
     }
+
+    private void choose(final String key) {
+        for (final Feature feature : features) {
+            if (feature.menuKey().equals(key)) {
+                feature.action();
+                return;
+            }
+        }
+        printErr("Invalid option!");
+    }
+
+    ///////////////////////////////////////////////////////////////////
+    // Utility functions for I/O operations on standard input/output //
+    ///////////////////////////////////////////////////////////////////
 
     private String prompt(final String subFeature) {
         final String feat;
@@ -185,12 +190,6 @@ public final class App {
                 }
             }
         }
-    }
-
-    private String read(final String prompt, final String key) {
-        System.out.print(prompt(key));
-        System.out.print(prompt);
-        return reader.nextLine();
     }
 
     public static void print(final Object obj, final String key) {
@@ -219,6 +218,12 @@ public final class App {
 
     public static void clear() {
         System.out.println(PROMPT_CLEAR);
+    }
+
+    private String read(final String prompt, final String key) {
+        System.out.print(prompt(key));
+        System.out.print(prompt);
+        return reader.nextLine();
     }
 
     public static String readLine(final String prompt, final String key) {
@@ -255,6 +260,6 @@ public final class App {
         }
         final String config = args.length == 1 ? args[0] : null;
         INSTANCE = new App(config);
-        INSTANCE.run();
+        SwingUtilities.invokeLater(INSTANCE);
     }
 }

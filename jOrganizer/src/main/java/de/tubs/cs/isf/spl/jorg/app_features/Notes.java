@@ -1,7 +1,7 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 
 import java.util.Stack;
 
@@ -12,7 +12,7 @@ import static de.tubs.cs.isf.spl.jorg.App.clear;
  *
  * @author rose
  */
-public class Notes extends Feature {
+public class Notes extends BasicFeature {
 
     private static final String ADD_NOTE = "add";
     private static final String VIEW_LAST_NOTE = "show";

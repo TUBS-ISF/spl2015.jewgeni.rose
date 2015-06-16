@@ -1,21 +1,17 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
-import java.time.LocalDateTime;
-
 import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
+import java.time.LocalDateTime;
 
 /**
  *
  * @author rose
  */
-public class Clock extends Feature {
+public class Clock extends BasicFeature {
 
-	private static final String FEATURE_KEY = "clock";
-	private static final String FEATURE_DESC = "show date and time";
-
-	public Clock() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public Clock(final String key, final String desc) {
+        super(key, desc);
     }
 
     @Override

@@ -1,27 +1,29 @@
 package de.tubs.cs.isf.spl.jorg;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import de.tubs.cs.isf.spl.jorg.app_features.AlarmMenu;
+import de.tubs.cs.isf.spl.jorg.app_features.Calculator;
+import de.tubs.cs.isf.spl.jorg.app_features.Clock;
+import de.tubs.cs.isf.spl.jorg.app_features.Notes;
+import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
 
 import javax.management.timer.Timer;
-
-import de.tubs.cs.isf.spl.jorg.calendar.Calendar;
+import javax.swing.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author rose
  */
-public final class App {
+public final class App implements Runnable {
 
     /*
      * Prompt formatter strings.
@@ -33,7 +35,20 @@ public final class App {
     public static final String PROMPT_NORMAL = "\033[0m";
     public static final String PROMPT_CLEAR = "\033[H\033[2J";
 
-	private static final String DEFAULT_CONFIG = "default.config";
+    /*
+     * first level features.
+     */
+    static final String FEATURE_CALENDAR = "calendar";
+    static final String FEATURE_ALARM = "alarm";
+    static final String FEATURE_NOTES = "notes";
+    static final String FEATURE_CALCULATOR = "calc";
+    static final String FEATURE_CLOCK = "clock";
+    static final String FEATURE_MULTI_USER = "users";
+
+    /*
+     * Global flags and config.
+     */
+    public static final Properties CONFIG = new Properties();
     public static final String EXIT = "exit";
 
     /*
@@ -43,46 +58,61 @@ public final class App {
 
     private final Scanner reader;
     private final List<Feature> features;
-	private final Set<String> featureConfiguration;
+    private final Properties properties;
     private String menuString;
     private UserMenu userSystem;
 
-	public App(Path path) {
+    public App(final String path) {
         Locale.setDefault(Locale.ENGLISH);
-		featureConfiguration = new HashSet<String>();
+        Properties p = new Properties();
+        Reader r = null;
         try {
             if (path == null) {
-				path = Paths.get(getClass().getClassLoader().getResource(DEFAULT_CONFIG).toURI());
+                r = new InputStreamReader(getClass().getClassLoader().getResource("default.properties").
+                        openStream());
+            } else {
+                r = new FileReader(path);
             }
-			featureConfiguration.addAll(Files.readAllLines(path));
-		} catch (URISyntaxException e) {
-			Logger.getLogger(App.class.getName()).log(Level.SEVERE, "Couldn't find properties at '" + path + "'");
-		} catch (IOException e) {
-			Logger.getLogger(App.class.getName()).log(Level.SEVERE, "Couldn't find properties at '" + path + "'");
-		}
+            p.load(r);
+            CONFIG.putAll(p);
+        } catch (final IOException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, "Couldn't find properties at '" + path + "'", ex);
+        } finally {
+            try {
+                if (r != null) {
+                    r.close();
+                }
+            } catch (final IOException ignore) {
+            }
+        }
         reader = new Scanner(System.in);
+        this.properties = p;
         features = new ArrayList<Feature>();
     }
 
-    public void init() {
+    private void init() {
         // non-optional feature
-		final Calendar cal = new Calendar();
+        final Calendar cal = new Calendar(FEATURE_CALENDAR, properties.getProperty(FEATURE_CALENDAR));
         final String name = readLine("Enter your name: ");
         final User user = new User(name, cal);
-		userSystem = new UserMenu();
+        userSystem = new UserMenu(FEATURE_MULTI_USER, FEATURE_MULTI_USER);
         userSystem.init(user);
         features.add(cal);
 
-		for (final String featureClass : featureConfiguration) {
-			try {
-				features.add((Feature) Class.forName(featureClass).newInstance());
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+        for (final String key : properties.stringPropertyNames()) {
+            if (FEATURE_ALARM.equals(key)) {
+                features.add(new AlarmMenu(key, properties.getProperty(key)));
+            } else if (FEATURE_CALCULATOR.equals(key)) {
+                features.add(new Calculator(key, properties.getProperty(key)));
+            } else if (FEATURE_CLOCK.equals(key)) {
+                features.add(new Clock(key, properties.getProperty(key)));
+            } else if (FEATURE_NOTES.equals(key)) {
+                features.add(new Notes(key, properties.getProperty(key)));
+            } else if (FEATURE_MULTI_USER.equals(key)) {
+                final UserMenu sys = new UserMenu(key, properties.getProperty(key), userSystem, features);
+                userSystem = sys;
+                features.add(sys);
+            }
         }
         final StringBuilder sb = new StringBuilder();
         sb.append(PROMPT_BOLD + "main menu:\n" + PROMPT_NORMAL);
@@ -94,29 +124,11 @@ public final class App {
         menuString = sb.toString();
     }
 
-	public Set<String> featureConfig() {
-		return featureConfiguration;
-	}
-
-	public List<Feature> features() {
-		return features;
-	}
-
     public User currentUser() {
         if (userSystem == null) {
             return null;
         }
         return userSystem.current();
-    }
-
-    public void choose(final String key) {
-        for (final Feature feature : features) {
-            if (feature.menuKey().equals(key)) {
-                feature.action();
-                return;
-            }
-        }
-        printErr("Invalid option!");
     }
 
     public Calendar calendar() {
@@ -141,6 +153,20 @@ public final class App {
         }
     }
 
+    private void choose(final String key) {
+        for (final Feature feature : features) {
+            if (feature.menuKey().equals(key)) {
+                feature.action();
+                return;
+            }
+        }
+        printErr("Invalid option!");
+    }
+
+    ///////////////////////////////////////////////////////////////////
+    // Utility functions for I/O operations on standard input/output //
+    ///////////////////////////////////////////////////////////////////
+
     private String prompt(final String subFeature) {
         final String feat;
         if (subFeature != null && !subFeature.isEmpty()) {
@@ -164,12 +190,6 @@ public final class App {
                 }
             }
         }
-    }
-
-    private String read(final String prompt, final String key) {
-        System.out.print(prompt(key));
-        System.out.print(prompt);
-        return reader.nextLine();
     }
 
     public static void print(final Object obj, final String key) {
@@ -198,6 +218,12 @@ public final class App {
 
     public static void clear() {
         System.out.println(PROMPT_CLEAR);
+    }
+
+    private String read(final String prompt, final String key) {
+        System.out.print(prompt(key));
+        System.out.print(prompt);
+        return reader.nextLine();
     }
 
     public static String readLine(final String prompt, final String key) {
@@ -232,8 +258,8 @@ public final class App {
             System.err.println("usage: java -jar jOrganizer <pathToConfigFile>");
             System.exit(0);
         }
-		final Path config = args.length == 1 ? Paths.get(args[0]) : null;
+        final String config = args.length == 1 ? args[0] : null;
         INSTANCE = new App(config);
-        INSTANCE.run();
+        SwingUtilities.invokeLater(INSTANCE);
     }
 }

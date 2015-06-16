@@ -1,7 +1,7 @@
 package de.tubs.cs.isf.spl.jorg.calendar.imports;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,7 @@ import static de.tubs.cs.isf.spl.jorg.App.clear;
  * @author rose
  * @date 24.05.15.
  */
-public class ImportMenu extends Feature {
+public class ImportMenu extends BasicFeature {
 
     private static final String ICS_FORMAT = "ics";
     private static final String CSV_FORMAT = "csv";

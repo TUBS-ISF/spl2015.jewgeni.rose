@@ -1,20 +1,18 @@
 package de.tubs.cs.isf.spl.jorg.calendar.exports.share;
 
+import de.tubs.cs.isf.spl.jorg.calendar.exports.HtmlExporter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.tubs.cs.isf.spl.jorg.calendar.exports.HtmlExporter;
-
 /**
  * @author rose
  * @date 25.05.15.
  */
 public class HtmlShareExporter extends HtmlExporter {
-
-	private static final String FORMAT = "html";
 
     private static final String FACEBOOK = "facebook";
     private static final String GOOGLE = "google";
@@ -24,12 +22,11 @@ public class HtmlShareExporter extends HtmlExporter {
 
     private final Set<Sharer> sharers;
 
-	public HtmlShareExporter() {
-		super(FORMAT);
+    public HtmlShareExporter(final String key, final String shrs) {
+        super(key);
         sharers = new HashSet<Sharer>();
 
-		// TODO load sharers
-		for (final String sharer : "".split(",")) {
+        for (final String sharer : shrs.split(",")) {
             if (FACEBOOK.equals(sharer)) {
                 sharers.add(new FacebookSharer(FACEBOOK));
             } else if (GOOGLE.equals(sharer)) {

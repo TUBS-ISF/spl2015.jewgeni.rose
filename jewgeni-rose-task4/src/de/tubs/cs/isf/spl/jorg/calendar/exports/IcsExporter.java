@@ -1,6 +1,6 @@
 package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,19 +8,18 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import static de.tubs.cs.isf.spl.jorg.App.app;
 
 /**
  * @author rose
  */
 public class IcsExporter extends Exporter {
 
-	private static final String FORMAT = "ics";
     private static final String FOOTER = "END:VCALENDAR\n";
     private final DateFormat dateFormat;
 
-	public IcsExporter() {
-		super(FORMAT);
+    public IcsExporter(final String name) {
+        super(name);
         dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
     }
 

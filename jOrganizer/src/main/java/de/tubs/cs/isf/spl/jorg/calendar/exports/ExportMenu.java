@@ -1,7 +1,7 @@
 package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 import de.tubs.cs.isf.spl.jorg.calendar.exports.share.HtmlShareExporter;
 
 import java.util.HashSet;
@@ -13,7 +13,7 @@ import static de.tubs.cs.isf.spl.jorg.App.clear;
 /**
  * @author rose
  */
-public class ExportMenu extends Feature {
+public class ExportMenu extends BasicFeature {
 
     private static final String PLAIN_TXT_FORMAT = "txt";
     private static final String MARKDOWN_FORMAT = "md";

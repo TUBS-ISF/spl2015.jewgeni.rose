@@ -1,5 +1,14 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
+
+import javax.management.timer.Timer;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
+import javax.swing.*;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -8,30 +17,17 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.management.timer.Timer;
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
-import de.tubs.cs.isf.spl.jorg.Feature;
-
 /**
  * @author rose
  */
-public class AlarmMenu extends Feature {
+public class AlarmMenu extends BasicFeature {
 
-	private static final String FEATURE_KEY = "alarm";
-	private static final String FEATURE_DESC = "set up an alarm";
     private final LocalTime DEFAULT_TIME = LocalTime.of(8, 0);
     private final LocalDate DEFAULT_DATE = LocalDate.now().plusDays(1);
     private final Duration DEFAULT_SLEEP_TIME = Duration.ofMinutes(5);
 
-	public AlarmMenu() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public AlarmMenu(final String key, final String desc) {
+        super(key, desc);
     }
 
     @Override

@@ -1,27 +1,23 @@
 package de.tubs.cs.isf.spl.jorg.calendar.reminder;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.app;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
+import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
+import javax.swing.*;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.SwingUtilities;
-
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.app;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  *
  * @author rose
  */
-public final class ReminderMenu extends Feature {
-
-	private static final String FEATURE_KEY = "reminder";
-	private static final String FEATURE_DESC = "reminder function for a meeting";
+public final class ReminderMenu extends BasicFeature {
 
     private static final String SOUND_REMINDER = "sound";
     private static final String ADD_REMINDER = "add";
@@ -32,12 +28,10 @@ public final class ReminderMenu extends Feature {
     private final String menuString;
     private final boolean withSound;
 
-	public ReminderMenu() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public ReminderMenu(final String key, final String reminder) {
+        super(key, key);
         this.reminders = new HashMap<String, Reminder>();
-
-		// TODO load sound reminder or not
-		withSound = SOUND_REMINDER.equals("");
+        withSound = SOUND_REMINDER.equals(reminder);
 
         final StringBuilder sb = new StringBuilder();
         sb.append(App.PROMPT_BOLD + "reminder menu:\n" + App.PROMPT_NORMAL);

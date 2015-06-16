@@ -1,40 +1,47 @@
 package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
+import de.tubs.cs.isf.spl.jorg.calendar.exports.share.HtmlShareExporter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  * @author rose
  */
-public class ExportMenu extends Feature {
+public class ExportMenu extends BasicFeature {
 
-	private static final String FEATURE_KEY = "export";
-	private static final String FEATURE_DESC = "export function for meetings";
+    private static final String PLAIN_TXT_FORMAT = "txt";
+    private static final String MARKDOWN_FORMAT = "md";
+    private static final String ICS_FORMAT = "ics";
+    private static final String HTML_FORMAT = "html";
+    private static final String CSV_FORMAT = "csv";
+
 
     private final Set<Exporter> exporters;
     private final String menuString;
 
-	public ExportMenu(final String printrs, final String sharers) {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public ExportMenu(final String key, final String printrs, final String sharers) {
+        super(key, "export function for meetings");
         exporters = new HashSet<Exporter>();
-
-		// TODO load printers to export
-		for (final String featureClass : "".split(",")) {
-			try {
-				exporters.add((Exporter) Class.forName(featureClass).newInstance());
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+        for (final String opt : printrs.split(",")) {
+            if (HTML_FORMAT.equals(opt) && sharers == null) {
+                exporters.add(new HtmlExporter(HTML_FORMAT));
+            } else if (HTML_FORMAT.equals(opt)) {
+                exporters.add(new HtmlShareExporter(HTML_FORMAT, sharers));
+            } else if (PLAIN_TXT_FORMAT.equals(opt)) {
+                exporters.add(new PlainExporter(PLAIN_TXT_FORMAT));
+            } else if (MARKDOWN_FORMAT.equals(opt)) {
+                exporters.add(new MarkdownExporter(MARKDOWN_FORMAT));
+            } else if (ICS_FORMAT.equals(opt)) {
+                exporters.add(new IcsExporter(ICS_FORMAT));
+            } else if (CSV_FORMAT.equals(opt)) {
+                exporters.add(new CsvExporter(CSV_FORMAT));
+            }
         }
 
         final StringBuilder sb = new StringBuilder();

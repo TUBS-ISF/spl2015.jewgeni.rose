@@ -1,7 +1,7 @@
 package de.tubs.cs.isf.spl.jorg.calendar.reminder;
 
 import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ import static de.tubs.cs.isf.spl.jorg.App.clear;
  *
  * @author rose
  */
-public final class ReminderMenu extends Feature {
+public final class ReminderMenu extends BasicFeature {
 
     private static final String SOUND_REMINDER = "sound";
     private static final String ADD_REMINDER = "add";

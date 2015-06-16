@@ -1,20 +1,18 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 import groovy.lang.GroovyShell;
-import de.tubs.cs.isf.spl.jorg.Feature;
 
 /**
  *
  * @author rose
  */
-public class Calculator extends Feature {
+public class Calculator extends BasicFeature {
 
-	private static final String FEATURE_KEY = "calc";
-	private static final String FEATURE_DESC = "start basic calculator";
     private final GroovyShell shell;
 
-	public Calculator() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public Calculator(final String key, final String desc) {
+        super(key, desc);
         shell = new GroovyShell();
     }
 

@@ -1,17 +1,16 @@
 package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
 import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+
+import static de.tubs.cs.isf.spl.jorg.App.app;
 
 /**
  * @author rose
  */
 public class MarkdownExporter extends Exporter {
 
-	private static final String FORMAT = "md";
-
-	public MarkdownExporter() {
-		super(FORMAT);
+    public MarkdownExporter(final String name) {
+        super(name);
     }
 
     @Override

@@ -1,21 +1,18 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 
 import java.util.Stack;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  *
  * @author rose
  */
-public class Notes extends Feature {
-
-	private static final String FEATURE_KEY = "notes";
-	private static final String FEATURE_DESC = "write down some notes";
+public class Notes extends BasicFeature {
 
     private static final String ADD_NOTE = "add";
     private static final String VIEW_LAST_NOTE = "show";
@@ -28,12 +25,10 @@ public class Notes extends Feature {
     private final String menuString;
     private final boolean historyMode;
 
-	public Notes() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public Notes(final String key, final String desc) {
+        super(key, desc);
         notes = new Stack<Note>();
-
-		// TODO load history
-		this.historyMode = App.app().featureConfig().contains(HISTORY);
+        this.historyMode = App.CONFIG.getProperty(HISTORY) != null;
 
         final StringBuilder sb = new StringBuilder();
         sb.append(App.PROMPT_BOLD + "notes menu:\n" + App.PROMPT_NORMAL);

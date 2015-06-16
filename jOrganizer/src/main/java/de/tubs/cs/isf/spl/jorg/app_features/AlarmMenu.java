@@ -1,6 +1,6 @@
 package de.tubs.cs.isf.spl.jorg.app_features;
 
-import de.tubs.cs.isf.spl.jorg.Feature;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 
 import javax.management.timer.Timer;
 import javax.sound.midi.InvalidMidiDataException;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 /**
  * @author rose
  */
-public class AlarmMenu extends Feature {
+public class AlarmMenu extends BasicFeature {
 
     private final LocalTime DEFAULT_TIME = LocalTime.of(8, 0);
     private final LocalDate DEFAULT_DATE = LocalDate.now().plusDays(1);

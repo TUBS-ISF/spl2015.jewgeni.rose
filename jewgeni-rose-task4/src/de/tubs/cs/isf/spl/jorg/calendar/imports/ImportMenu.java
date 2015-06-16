@@ -1,22 +1,19 @@
 package de.tubs.cs.isf.spl.jorg.calendar.imports;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  * @author rose
  * @date 24.05.15.
  */
-public class ImportMenu extends Feature {
-
-	private static final String FEATURE_KEY = "import";
-	private static final String FEATURE_DESC = "import function for meetings";
+public class ImportMenu extends BasicFeature {
 
     private static final String ICS_FORMAT = "ics";
     private static final String CSV_FORMAT = "csv";
@@ -24,12 +21,10 @@ public class ImportMenu extends Feature {
     private final Set<Importer> importers;
     private final String menuString;
 
-	public ImportMenu() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public ImportMenu(final String key, final String exprts) {
+        super(key, "import function for meetings");
         importers = new HashSet<Importer>();
-
-		// TODO load exports 
-		for (final String opt : "".split(",")) {
+        for (final String opt : exprts.split(",")) {
             if (ICS_FORMAT.equals(opt)) {
                 importers.add(new IcsImporter(ICS_FORMAT));
             } else if (CSV_FORMAT.equals(opt)) {

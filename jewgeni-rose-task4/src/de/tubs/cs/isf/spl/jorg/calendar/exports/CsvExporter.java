@@ -1,20 +1,18 @@
 package de.tubs.cs.isf.spl.jorg.calendar.exports;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
 
 import java.time.format.DateTimeFormatter;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import static de.tubs.cs.isf.spl.jorg.App.app;
 
 /**
  * @author rose
  */
 public class CsvExporter extends Exporter {
 
-	private static final String FORMAT = "csv";
-
-	public CsvExporter() {
-		super(FORMAT);
+    public CsvExporter(final String name) {
+        super(name);
     }
 
     @Override

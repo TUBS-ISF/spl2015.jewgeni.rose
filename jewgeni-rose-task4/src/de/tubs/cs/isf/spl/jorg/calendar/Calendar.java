@@ -1,7 +1,10 @@
 package de.tubs.cs.isf.spl.jorg.calendar;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import de.tubs.cs.isf.spl.jorg.App;
+import de.tubs.cs.isf.spl.jorg.BasicFeature;
+import de.tubs.cs.isf.spl.jorg.calendar.exports.ExportMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.imports.ImportMenu;
+import de.tubs.cs.isf.spl.jorg.calendar.reminder.ReminderMenu;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -11,22 +14,25 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.Feature;
+import static de.tubs.cs.isf.spl.jorg.App.CONFIG;
+import static de.tubs.cs.isf.spl.jorg.App.EXIT;
+import static de.tubs.cs.isf.spl.jorg.App.clear;
 
 /**
  * @author rose
  */
-public class Calendar extends Feature {
+public class Calendar extends BasicFeature {
+
+    private static final String CALENDAR_FEATURE_IMPORT = "import";
+    private static final String CALENDAR_FEATURE_EXPORT = "export";
+    private static final String CALENDAR_FEATURE_REMIND = "reminder";
+    private static final String CALENDAR_FEATURE_SHARE = "share";
 
     private static final String ADD_MEETING = "add";
     private static final String REMOVE_MEETING = "remove";
     private static final String LIST_MEETINGS = "list";
 
-	private static final String FEATURE_KEY = "calendar";
-	private static final String FEATURE_DESC = "calendar function";
-
-    private final List<Feature> features;
+    private final List<BasicFeature> features;
     private final Set<Meeting> meetings;
     private final String menuString;
     private static final String NEW_MEETING = ""
@@ -37,22 +43,30 @@ public class Calendar extends Feature {
             + "-----------------------------------------------------------";
     private boolean firstAdd;
 
-	public Calendar() {
-		super(FEATURE_KEY, FEATURE_DESC);
+    public Calendar(final String key) {
+        this(key, key);
+    }
+
+    public Calendar(final String key, final String desc) {
+        super(key, desc);
         this.meetings = new TreeSet<Meeting>();
         this.firstAdd = true;
-        features = new ArrayList<Feature>();
-		for (final String featureClass : App.app().featureConfig()) {
-			try {
-				features.add((Feature) Class.forName(featureClass).newInstance());
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+        features = new ArrayList<BasicFeature>();
+        for (final String feature : CONFIG.stringPropertyNames()) {
+            if (CALENDAR_FEATURE_IMPORT.equals(feature)) {
+                features.add(new ImportMenu(feature, CONFIG.getProperty(feature)));
+            } else if (CALENDAR_FEATURE_EXPORT.equals(feature)) {
+                String sharers = null;
+                for (final String share : CONFIG.stringPropertyNames()) {
+                    if (CALENDAR_FEATURE_SHARE.equals(share)) {
+                        sharers = CONFIG.getProperty(share);
+                    }
+                }
+                features.add(new ExportMenu(feature, CONFIG.getProperty(feature), sharers));
+            } else if (CALENDAR_FEATURE_REMIND.equals(feature)) {
+                features.add(new ReminderMenu(feature, CONFIG.getProperty(feature)));
+            }
+        }
 
         final StringBuilder sb = new StringBuilder();
         sb.append(App.PROMPT_BOLD + "calendar menu:\n" + App.PROMPT_NORMAL);
@@ -60,7 +74,7 @@ public class Calendar extends Feature {
         sb.append(String.format("%10s - Add a new meeting\n", "[" + ADD_MEETING + "]"));
         sb.append(String.format("%10s - Remove an existing meeting\n", "[" + REMOVE_MEETING + "]"));
         sb.append(String.format("%10s - Show all meetings\n", "[" + LIST_MEETINGS + "]"));
-        for (final Feature f : features) {
+        for (final BasicFeature f : features) {
             String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
             sb.append(keyStr).append(f.description()).append("\n");
         }
@@ -93,7 +107,7 @@ public class Calendar extends Feature {
     }
 
     private void chooseFeature(final String key) {
-        for (final Feature feature : features) {
+        for (final BasicFeature feature : features) {
             if (feature.menuKey().equals(key)) {
                 feature.action();
                 return;

@@ -38,8 +38,12 @@ public class User {
         return Objects.equals(this.name, other.name);
     }
 
+    public String name() {
+        return name;
+    }
+
     @Override
     public String toString() {
-        return name;
+        return name();
     }
 }
