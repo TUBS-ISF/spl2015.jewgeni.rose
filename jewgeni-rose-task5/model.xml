@@ -8,94 +8,91 @@
 					organizing meetings. Some main features are 
 					print/import/export the schedule of an user.
 				</description>
-				<feature name="Clock">
-					<description>
-						Simple digital clock function, shows the current date and time.
-					</description>
-				</feature>
-				<feature name="MultiUserSupport">
-					<description>
-						Support for multiple users.
-					</description>
-				</feature>
-				<feature name="Calculator">
-					<description>
-						A powerful command line calculator.
-					</description>
-				</feature>
-				<and mandatory="true" name="Calendar">
-					<description>
-						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
-					</description>
-					<or abstract="true" name="Export">
+				<and mandatory="true" name="Base">
+					<feature name="Calculator">
 						<description>
-							Print function for meetings. Possible output formats would be 
-							pdf, html, markdown or plain text documents.
+							A powerful command line calculator.
 						</description>
-						<and mandatory="true" name="HtmlExport">
-							<or abstract="true" name="Share">
-								<description>
-									Share function (like modern social media "share buttons") 
-									with a possibility for several share on several social media sites. 
-									Basically adds social media buttons to the html export.
-								</description>
-								<feature mandatory="true" name="ShareViaEmail">
+					</feature>
+					<and mandatory="true" name="Calendar">
+						<description>
+							Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
+						</description>
+						<or name="Export">
+							<description>
+								Print function for meetings. Possible output formats would be 
+								pdf, html, markdown or plain text documents.
+							</description>
+							<and mandatory="true" name="HtmlExport">
+								<or name="Share">
 									<description>
-										
+										Share function (like modern social media "share buttons") 
+										with a possibility for several share on several social media sites. 
+										Basically adds social media buttons to the html export.
 									</description>
-								</feature>
-								<feature mandatory="true" name="ShareViaFacebook"/>
-								<feature mandatory="true" name="ShareViaTwitter"/>
-								<feature mandatory="true" name="ShareViaLinkedIn"/>
-								<feature mandatory="true" name="ShareViaGoogle"/>
-							</or>
-						</and>
-						<feature mandatory="true" name="PlainExport">
+									<feature mandatory="true" name="ShareViaEmail">
+										<description>
+											
+										</description>
+									</feature>
+									<feature mandatory="true" name="ShareViaFacebook"/>
+									<feature mandatory="true" name="ShareViaTwitter"/>
+									<feature mandatory="true" name="ShareViaLinkedIn"/>
+									<feature mandatory="true" name="ShareViaGoogle"/>
+								</or>
+							</and>
+							<feature mandatory="true" name="PlainExport">
+								<description>
+									
+								</description>
+							</feature>
+							<feature mandatory="true" name="MarkdownExport"/>
+							<feature mandatory="true" name="CsvExport"/>
+							<feature mandatory="true" name="IcsExport"/>
+						</or>
+						<or name="Import">
+							<description>
+								Basic I/O operations for import from and export to 
+								different (calendar) formats.
+							</description>
+							<feature mandatory="true" name="CsvImport"/>
+							<feature mandatory="true" name="IcsImport"/>
+						</or>
+						<and name="Reminder">
 							<description>
 								
 							</description>
-						</feature>
-						<feature mandatory="true" name="MarkdownExport"/>
-						<feature mandatory="true" name="CsvExport"/>
-						<feature mandatory="true" name="IcsExport"/>
-					</or>
-					<or abstract="true" name="Import">
+							<feature name="ReminderWithSound">
+								<description>
+									
+								</description>
+							</feature>
+						</and>
+					</and>
+					<feature name="Clock">
 						<description>
-							Basic I/O operations for import from and export to 
-							different (calendar) formats.
+							Simple digital clock function, shows the current date and time.
 						</description>
-						<feature mandatory="true" name="CsvImport"/>
-						<feature mandatory="true" name="IcsImport"/>
-					</or>
-					<and name="Reminder">
+					</feature>
+					<feature name="MultiUserSupport">
 						<description>
-							
+							Support for multiple users.
 						</description>
-						<feature name="ReminderWithSound">
+					</feature>
+					<and name="Notes">
+						<description>
+							Function for quick notes (like one note) or a todo-list. 
+							Will be displayed next to the pending meetings.
+						</description>
+						<feature name="NotesWithHistory">
 							<description>
-								
+								History function for storing and displaying old notes.
 							</description>
 						</feature>
 					</and>
-				</and>
-				<and name="Notes">
-					<description>
-						Function for quick notes (like one note) or a todo-list. 
-						Will be displayed next to the pending meetings.
-					</description>
-					<feature name="NotesWithHistory">
+					<feature name="Alarm">
 						<description>
-							History function for storing and displaying old notes.
-						</description>
-					</feature>
-				</and>
-				<and name="Alarm">
-					<description>
-						Alarm feature. Opens a graphical PopUp with further information.
-					</description>
-					<feature name="AlarmWithSound">
-						<description>
-							Play a sound in a graphical PopUp.
+							Alarm feature. Opens a graphical PopUp with further information.
 						</description>
 					</feature>
 				</and>
