@@ -14,7 +14,7 @@ import java.util.TreeSet;
 import static jorg.App.EXIT; 
 import static jorg.App.clear; 
 
-import jorg.ReminderMenu; 
+import jorg.calendar.imports.ImportMenu; 
 
 /**
  * @author rose
@@ -72,7 +72,7 @@ public   class  Calendar  extends BasicFeature {
 		menuString.append(String.format("%10s - Show all meetings\n", "[" + LIST_MEETINGS + "]"));
 	
 		original(key, desc);
-		addFeature(new ReminderMenu());
+		addFeature(new ImportMenu());
 	}
 
 	

@@ -1,6 +1,6 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports;
+package jorg.calendar.exports;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static jorg.App.app;
 
 /**
  * @author rose

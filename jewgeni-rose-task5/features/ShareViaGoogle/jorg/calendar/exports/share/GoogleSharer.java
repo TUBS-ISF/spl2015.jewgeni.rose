@@ -1,13 +1,12 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports.share;
+package jorg.calendar.exports.share;
 
 /**
  * @author rose
- * @date 26.05.15.
  */
 public class GoogleSharer extends Sharer {
 
-    protected GoogleSharer(final String name) {
-        super(name);
+    protected GoogleSharer() {
+        super("google");
     }
 
     @Override

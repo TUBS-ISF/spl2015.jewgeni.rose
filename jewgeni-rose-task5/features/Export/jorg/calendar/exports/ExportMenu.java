@@ -1,58 +1,36 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports;
+package jorg.calendar.exports;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.BasicFeature;
-import de.tubs.cs.isf.spl.jorg.calendar.exports.share.HtmlShareExporter;
+import jorg.App;
+import jorg.BasicFeature;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import static jorg.App.EXIT;
+import static jorg.App.clear;
 
 /**
  * @author rose
  */
 public class ExportMenu extends BasicFeature {
 
-    private static final String PLAIN_TXT_FORMAT = "txt";
-    private static final String MARKDOWN_FORMAT = "md";
-    private static final String ICS_FORMAT = "ics";
-    private static final String HTML_FORMAT = "html";
-    private static final String CSV_FORMAT = "csv";
-
-
     private final Set<Exporter> exporters;
-    private final String menuString;
+    private final StringBuilder menuString;
 
-    public ExportMenu(final String key, final String printrs, final String sharers) {
-        super(key, "export function for meetings");
+    public ExportMenu() {
+        super("export", "export function for meetings");
         exporters = new HashSet<Exporter>();
-        for (final String opt : printrs.split(",")) {
-            if (HTML_FORMAT.equals(opt) && sharers == null) {
-                exporters.add(new HtmlExporter(HTML_FORMAT));
-            } else if (HTML_FORMAT.equals(opt)) {
-                exporters.add(new HtmlShareExporter(HTML_FORMAT, sharers));
-            } else if (PLAIN_TXT_FORMAT.equals(opt)) {
-                exporters.add(new PlainExporter(PLAIN_TXT_FORMAT));
-            } else if (MARKDOWN_FORMAT.equals(opt)) {
-                exporters.add(new MarkdownExporter(MARKDOWN_FORMAT));
-            } else if (ICS_FORMAT.equals(opt)) {
-                exporters.add(new IcsExporter(ICS_FORMAT));
-            } else if (CSV_FORMAT.equals(opt)) {
-                exporters.add(new CsvExporter(CSV_FORMAT));
-            }
-        }
-
-        final StringBuilder sb = new StringBuilder();
-        sb.append(App.PROMPT_BOLD + "export menu:\n" + App.PROMPT_NORMAL);
-        sb.append(String.format("%10s - Exits export menu\n", "[exit]"));
-        for (final Exporter p : exporters) {
-            sb.append(String.format("%10s - %s%n", "[" + p.name() + "]",
-                    "save meetings into file with " + p.name() + "-format (add '_p' for preview only)"));
-        }
-        menuString = sb.toString();
+       
+        menuString = new StringBuilder();
+        menuString.append(App.PROMPT_BOLD + "export menu:\n" + App.PROMPT_NORMAL);
+        menuString.append(String.format("%10s - Exits export menu\n", "[exit]"));
     }
+    
+    private void addExporter(final Exporter exp) {
+    	exporters.add(imp);
+		menuString.append(String.format("%10s - %s%n", "[" + exp.name() + "]",
+						"save meetings into file with " + exp.name() + "-format (add '_p' for preview only)"));
+	}
 
     @Override
     public void action() {

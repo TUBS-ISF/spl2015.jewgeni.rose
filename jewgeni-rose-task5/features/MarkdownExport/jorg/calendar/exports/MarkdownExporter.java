@@ -1,16 +1,16 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports;
+package jorg.calendar.exports;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static jorg.App.app;
 
 /**
  * @author rose
  */
 public class MarkdownExporter extends Exporter {
 
-    public MarkdownExporter(final String name) {
-        super(name);
+    public MarkdownExporter() {
+        super("md");
     }
 
     @Override

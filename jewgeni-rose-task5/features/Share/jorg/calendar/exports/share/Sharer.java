@@ -1,8 +1,7 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports.share;
+package jorg.calendar.exports.share;
 
 /**
  * @author rose
- * @date 25.05.15.
  */
 public abstract class Sharer {
 

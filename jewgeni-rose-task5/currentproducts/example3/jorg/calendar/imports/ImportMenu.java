@@ -31,10 +31,10 @@ public   class  ImportMenu  extends BasicFeature {
 		menuString.append(String.format("%10s - Exits export menu\n", "[exit]"));
 	
 		original();
-		addImporter(new IcsImporter());
+		addImporter(new CsvImporter());
 	
 		original();
-		addImporter(new CsvImporter());
+		addImporter(new IcsImporter());
 	}
 
 	

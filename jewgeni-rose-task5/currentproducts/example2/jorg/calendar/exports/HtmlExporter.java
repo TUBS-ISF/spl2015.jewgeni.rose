@@ -1,12 +1,12 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports; 
+package jorg.calendar.exports; 
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting; 
+import jorg.calendar.Meeting; 
 
 import java.io.BufferedReader; 
 import java.io.IOException; 
 import java.io.InputStreamReader; 
 
-import static de.tubs.cs.isf.spl.jorg.App.app; 
+import static jorg.App.app; 
 
 /**
  * @author rose
@@ -14,8 +14,8 @@ import static de.tubs.cs.isf.spl.jorg.App.app;
 public  class  HtmlExporter  extends Exporter {
 	
 
-    public HtmlExporter(final String name) {
-        super(name);
+    public HtmlExporter() {
+        super("html");
     }
 
 	
@@ -33,7 +33,7 @@ public  class  HtmlExporter  extends Exporter {
 
 	
 
-    protected String generateHtmlHeader() {
+    private String generateHtmlHeader() {
         final String user = app().currentUser().toString();
         final StringBuilder sb = new StringBuilder();
         sb.append("<title>").append(user).append("_calendar").append("</title>");
@@ -43,13 +43,13 @@ public  class  HtmlExporter  extends Exporter {
 
 	
 
-    protected String generateHtmlFooter() {
+    private String generateHtmlFooter() {
         return "\n</tbody></table></article></body></html>";
     }
 
 	
 
-    protected String generateHtmlTemplate() {
+    private String generateHtmlTemplate() {
         final StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResource
@@ -66,7 +66,7 @@ public  class  HtmlExporter  extends Exporter {
 
 	
 
-    protected String generateTableHeader() {
+    private String generateTableHeader() {
         final String user = app().currentUser().toString();
         final StringBuilder sb = new StringBuilder();
         sb.append("<h1>").append("Meetings for '").append(user).append("'</h1>");
@@ -83,7 +83,7 @@ public  class  HtmlExporter  extends Exporter {
 
 	
 
-    protected String generateTableContent() {
+    private String generateTableContent() {
         final StringBuilder sb = new StringBuilder();
         for (final Meeting m : app().calendar().meetings()) {
             sb.append("<tr>");

@@ -1,15 +1,14 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports.share;
+package jorg.calendar.exports.share;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static jorg.App.app;
 
 /**
  * @author rose
- * @date 26.05.15.
  */
 public class TwitterSharer extends Sharer {
 
-    protected TwitterSharer(final String name) {
-        super(name);
+    protected TwitterSharer() {
+        super("twitter");
     }
 
     @Override

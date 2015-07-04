@@ -1,8 +1,8 @@
-package de.tubs.cs.isf.spl.jorg.calendar.exports;
+package jorg.calendar.exports;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static jorg.App.app;
 
 /**
  *
@@ -10,8 +10,8 @@ import static de.tubs.cs.isf.spl.jorg.App.app;
  */
 public class PlainExporter extends Exporter {
 
-    public PlainExporter(final String name) {
-        super(name);
+    public PlainExporter() {
+        super("txt");
     }
 
     @Override

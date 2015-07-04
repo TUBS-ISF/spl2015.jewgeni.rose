@@ -7,6 +7,6 @@ public class ImportMenu extends BasicFeature {
 
 	public ImportMenu() {
 		original();
-		addImporter(new IcsImporter());
+		addImporter(new CsvImporter());
 	}
 }
