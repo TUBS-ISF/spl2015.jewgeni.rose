@@ -1,22 +1,21 @@
-package de.tubs.cs.isf.spl.jorg.calendar.imports;
+package jorg.calendar.imports;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static jorg.App.app;
 
 /**
  * @author rose
- * @date 24.05.15.
  */
 public class CsvImporter extends Importer {
 
-    protected CsvImporter(final String name) {
-        super(name);
+    protected CsvImporter() {
+        super("csv");
     }
 
     @Override

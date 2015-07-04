@@ -1,6 +1,4 @@
-package de.tubs.cs.isf.spl.jorg.calendar.imports;
-
-import de.tubs.cs.isf.spl.jorg.calendar.exports.PlainExporter;
+package jorg.calendar.imports;
 
 import java.io.IOException;
 import java.nio.file.Files;

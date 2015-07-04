@@ -1,6 +1,6 @@
-package de.tubs.cs.isf.spl.jorg.calendar.imports;
+package jorg.calendar.imports;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -11,18 +11,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-import static de.tubs.cs.isf.spl.jorg.App.app;
+import static jorg.App.app;
 
 /**
  * @author rose
- * @date 24.05.15.
  */
 public class IcsImporter extends Importer {
 
     private final DateFormat dateFormat;
 
-    protected IcsImporter(final String name) {
-        super(name);
+    protected IcsImporter() {
+        super("ics");
         dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
     }
 

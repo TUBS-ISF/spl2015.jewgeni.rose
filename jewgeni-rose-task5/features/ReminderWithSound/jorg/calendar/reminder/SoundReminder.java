@@ -1,6 +1,6 @@
-package de.tubs.cs.isf.spl.jorg.calendar.reminder;
+package jorg.calendar.reminder;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
@@ -20,11 +20,7 @@ class SoundReminder extends MuteReminder {
 
     SoundReminder(final Meeting meeting, final Duration before) {
         super(meeting, before);
-    }
-
-    SoundReminder(final Reminder reminder) {
-        this(reminder.meeting, reminder.before);
-    }
+    }    
 
     @Override
     protected void play() {

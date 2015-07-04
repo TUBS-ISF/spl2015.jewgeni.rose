@@ -51,18 +51,24 @@ public class Notes extends BasicFeature {
 		while (true) {
 			input = readLine();
 
-			if (EXIT.equals(input)) {
+			if (choose(input))
 				break;
-			} else if (ADD_NOTE.equals(input)) {
-				final String title = readLine("Title: ");
-				final String note = readLine("Note: ");
-				add(title, note);
-			} else if (VIEW_LAST_NOTE.equals(input)) {
-				view();
-			} else {
-				printErr("Invalid option");
-			}
 		}
+	}
+
+	private boolean choose(final String input) {
+		if (EXIT.equals(input)) {
+			return true;
+		} else if (ADD_NOTE.equals(input)) {
+			final String title = readLine("Title: ");
+			final String note = readLine("Note: ");
+			add(title, note);
+		} else if (VIEW_LAST_NOTE.equals(input)) {
+			view();
+		} else {
+			printErr("Invalid option");
+		}
+		return false;
 	}
 
 	public static class Note {

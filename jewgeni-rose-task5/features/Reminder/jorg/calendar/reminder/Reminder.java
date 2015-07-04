@@ -1,6 +1,6 @@
-package de.tubs.cs.isf.spl.jorg.calendar.reminder;
+package jorg.calendar.reminder;
 
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.calendar.Meeting;
 import java.time.Duration;
 import java.time.LocalDateTime;
 

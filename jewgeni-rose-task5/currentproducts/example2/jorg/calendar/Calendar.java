@@ -1,55 +1,68 @@
-package jorg;
+package jorg.calendar; 
 
-import jorg.BasicFeature;
-import jorg.calendar.exports.ExportMenu;
-import jorg.calendar.imports.ImportMenu;
-import jorg.calendar.reminder.ReminderMenu;
+import jorg.App; 
+import jorg.BasicFeature; 
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.time.Duration; 
+import java.time.LocalDateTime; 
+import java.time.format.DateTimeFormatter; 
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.Set; 
+import java.util.TreeSet; 
 
-import static jorg.App.EXIT;
-import static jorg.App.clear;
+import static jorg.App.EXIT; 
+import static jorg.App.clear; 
+
+import jorg.ReminderMenu; 
 
 /**
  * @author rose
  */
-public class Calendar extends BasicFeature {
+public   class  Calendar  extends BasicFeature {
+	
 
 	private static final String ADD_MEETING = "add";
+
+	
 	private static final String REMOVE_MEETING = "remove";
+
+	
 	private static final String LIST_MEETINGS = "list";
 
+	
+
 	private final List<BasicFeature> features;
+
+	
 	private final Set<Meeting> meetings;
+
+	
 	private final StringBuilder menuString;
+
+	
 	private static final String NEW_MEETING = "-----------------------------------------------------------\n"
 					+ "|       Please fill in the following information          |\n"
 					+ "|  You can leave out optional fields by pressing <ENTER>  |\n"
 					+ "|        You have to enter the title and date!            |\n"
 					+ "-----------------------------------------------------------";
+
+	
 	private boolean firstAdd;
+
+	
 
 	public Calendar() {
 		this("calendar", "calendar function");
 	}
 
-	public Calendar(final String key, final String desc) {
+	
+
+	public Calendar  (final String key, final String desc) {
 		super(key, desc);
 		this.meetings = new TreeSet<Meeting>();
 		this.firstAdd = true;
 		features = new ArrayList<BasicFeature>();
-
-		// TODO
-		features.add(new ImportMenu(feature, CONFIG.getProperty(feature)));
-		features.add(new ExportMenu(feature, CONFIG.getProperty(feature), sharers));
-		features.add(new ReminderMenu(feature, CONFIG.getProperty(feature)));
-
 		
 		menuString = new StringBuilder();
 		menuString.append(App.PROMPT_BOLD + "calendar menu:\n" + App.PROMPT_NORMAL);
@@ -57,12 +70,21 @@ public class Calendar extends BasicFeature {
 		menuString.append(String.format("%10s - Add a new meeting\n", "[" + ADD_MEETING + "]"));
 		menuString.append(String.format("%10s - Remove an existing meeting\n", "[" + REMOVE_MEETING + "]"));
 		menuString.append(String.format("%10s - Show all meetings\n", "[" + LIST_MEETINGS + "]"));
+	
+		original(key, desc);
+		addFeature(new ReminderMenu());
+	}
 
+	
+	
+	private void addFeature(final Feature f) {
+		features.add(f);
 		
-		// TODO
 		String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
 		menuString.append(keyStr).append(f.description()).append("\n");
 	}
+
+	
 
 	@Override
 	public void action() {
@@ -89,6 +111,8 @@ public class Calendar extends BasicFeature {
 		}
 	}
 
+	
+
 	private void chooseFeature(final String key) {
 		for (final BasicFeature feature : features) {
 			if (feature.menuKey().equals(key)) {
@@ -98,6 +122,8 @@ public class Calendar extends BasicFeature {
 		}
 		printErr("Invalid option!");
 	}
+
+	
 
 	private void addNewMeeting() {
 		if (firstAdd) {
@@ -133,11 +159,15 @@ public class Calendar extends BasicFeature {
 		meetings.add(m);
 	}
 
+	
+
 	private void deleteMeeting() {
 		final String title = readLine("Enter the meeting to delete: ");
 		final Meeting m = findMeeting(title);
 		meetings.remove(m);
 	}
+
+	
 
 	public Meeting findMeeting(final String title) {
 		for (final Meeting m : meetings) {
@@ -148,9 +178,13 @@ public class Calendar extends BasicFeature {
 		return null;
 	}
 
+	
+
 	public Set<Meeting> meetings() {
 		return meetings;
 	}
+
+	
 
 	@Override
 	public String toString() {
@@ -162,4 +196,6 @@ public class Calendar extends BasicFeature {
 		}
 		return sb.toString();
 	}
+
+
 }

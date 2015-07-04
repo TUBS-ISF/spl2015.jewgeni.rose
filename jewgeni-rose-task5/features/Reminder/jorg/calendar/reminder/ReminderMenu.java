@@ -1,17 +1,17 @@
-package de.tubs.cs.isf.spl.jorg.calendar.reminder;
+package jorg.calendar.reminder;
 
-import de.tubs.cs.isf.spl.jorg.App;
-import de.tubs.cs.isf.spl.jorg.BasicFeature;
-import de.tubs.cs.isf.spl.jorg.calendar.Meeting;
+import jorg.App;
+import jorg.BasicFeature;
+import jorg.calendar.Meeting;
 
 import javax.swing.*;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.tubs.cs.isf.spl.jorg.App.EXIT;
-import static de.tubs.cs.isf.spl.jorg.App.app;
-import static de.tubs.cs.isf.spl.jorg.App.clear;
+import static jorg.App.EXIT;
+import static jorg.App.app;
+import static jorg.App.clear;
 
 /**
  *
@@ -19,26 +19,22 @@ import static de.tubs.cs.isf.spl.jorg.App.clear;
  */
 public final class ReminderMenu extends BasicFeature {
 
-    private static final String SOUND_REMINDER = "sound";
     private static final String ADD_REMINDER = "add";
     private static final String REMOVE_REMINDER = "remove";
 
     private final Duration DEFAULT_REMINDER_TIME = Duration.ofMinutes(30);
     private final Map<String, Reminder> reminders;
-    private final String menuString;
-    private final boolean withSound;
+    private final StringBuilder menuString;
 
-    public ReminderMenu(final String key, final String reminder) {
-        super(key, key);
+    public ReminderMenu() {
+        super("reminder", "reminder for a meeting");
         this.reminders = new HashMap<String, Reminder>();
-        withSound = SOUND_REMINDER.equals(reminder);
 
-        final StringBuilder sb = new StringBuilder();
-        sb.append(App.PROMPT_BOLD + "reminder menu:\n" + App.PROMPT_NORMAL);
-        sb.append(String.format("%10s - exits reminder menu\n", "[" + EXIT + "]"));
-        sb.append(String.format("%10s - add a reminder\n", "[" + ADD_REMINDER + "]"));
-        sb.append(String.format("%10s - remove a reminder\n", "[" + REMOVE_REMINDER + "]"));
-        menuString = sb.toString();
+        menuString = new StringBuilder();
+        menuString.append(App.PROMPT_BOLD + "reminder menu:\n" + App.PROMPT_NORMAL);
+        menuString.append(String.format("%10s - exits reminder menu\n", "[" + EXIT + "]"));
+        menuString.append(String.format("%10s - add a reminder\n", "[" + ADD_REMINDER + "]"));
+        menuString.append(String.format("%10s - remove a reminder\n", "[" + REMOVE_REMINDER + "]"));
     }
 
     @Override
@@ -101,16 +97,17 @@ public final class ReminderMenu extends BasicFeature {
     private boolean add(final String meeting, final Duration before) {
         final Meeting m = app().calendar().findMeeting(meeting);
         if (m != null) {
-            Reminder r = new MuteReminder(m, before);
-            if (withSound) {
-                r = new SoundReminder(r);
-            }
+            final Reminder r = build(meeting, before);
             m.changeReminder(r);
             reminders.put(meeting, r);
             SwingUtilities.invokeLater(r);
             return true;
         }
         return false;
+    }
+    
+    private Reminder build(final Meeting meeting, final Duration before) {    	
+    	return new MuteReminder(meeting, before);
     }
 
     private boolean remove(final String meeting) {

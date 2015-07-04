@@ -1,13 +1,5 @@
 package jorg.app_features;
 
-import jorg.App;
-import jorg.BasicFeature;
-
-import java.util.Stack;
-
-import static jorg.App.EXIT;
-import static jorg.App.clear;
-
 /**
  *
  * @author rose
@@ -43,35 +35,17 @@ public class Notes extends BasicFeature {
 		println(sb);
 	}
 
-	@Override
-	public void action() {
-		String input;
-		clear();
-		println(menuString);
-		while (true) {
-			input = readLine();
-
-			if (EXIT.equals(input)) {
-				break;
-			} else if (ADD_NOTE.equals(input)) {
-				final String title = readLine("Title: ");
-				final String note = readLine("Note: ");
-				add(title, note);
-			} else if (VIEW_LAST_NOTE.equals(input)) {
-				view();
-			} else if (REMOVE_NOTE.equals(input)) {
-				final String title = readLine("Title: ");
-
-				if (remove(title)) {
-					println("Note successfully removed");
-				} else {
-					println("There is no such note as '" + title + "'!");
-				}
-			} else if (LIST_ALL_NOTES.equals(input)) {
-				list();
+	private boolean choose(final String input) {
+		if (REMOVE_NOTE.equals(input)) {
+			final String title = readLine("Title: ");
+			if (remove(title)) {
+				println("Note successfully removed");
 			} else {
-				printErr("Invalid option");
+				println("There is no such note as '" + title + "'!");
 			}
-		}
+		} else if (LIST_ALL_NOTES.equals(input)) {
+			list();
+		} else
+			original(input);
 	}
 }

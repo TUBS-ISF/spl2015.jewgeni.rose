@@ -1,74 +1,114 @@
-package jorg;
+package jorg; 
 
-// TODO
-import jorg.app_features.AlarmMenu;
-import jorg.app_features.Calculator;
-import jorg.app_features.Clock;
-import jorg.app_features.Notes;
-import jorg.calendar.Calendar;
+import jorg.calendar.Calendar; 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.Scanner; 
+
+import jorg.app_features.Calculator; 
+
+import jorg.app_features.Clock; 
+
+import jorg.UserMenu; 
 
 /**
  * @author rose
  */
-public final class App implements Runnable {
+public final   class  App  implements Runnable {
+	
 
 	/*
 	 * Prompt formatter strings.
 	 */
 	public static final String PROMPT_ERROR = "\033[47m\033[31m";
+
+	
 	public static final String PROMPT_BOLD_BLUE = "\033[1m\033[34m";
+
+	
 	public static final String PROMPT_BOLD_WHITE = "\033[1m\033[37m";
+
+	
 	public static final String PROMPT_BOLD = "\033[1m";
+
+	
 	public static final String PROMPT_NORMAL = "\033[0m";
+
+	
 	public static final String PROMPT_CLEAR = "\033[H\033[2J";
+
+	
 	public static final String EXIT = "exit";
+
+	
 
 	/*
 	 * Singleton
 	 */
 	private static App INSTANCE = null;
 
+	
+
 	private final Scanner reader;
+
+	
 	private final List<Feature> features;
+
+	
 	private final StringBuilder menuString;
+
+	
 	private UserMenu userSystem;
+
+	
 
 	public App() {
 		reader = new Scanner(System.in);
 		features = new ArrayList<Feature>();
+		menuString = new StringBuilder();
 	}
 
-	private void init() {
+	
+
+	 private void  init__wrappee__Base  () {
+		menuString.append(PROMPT_BOLD + "main menu:\n" + PROMPT_NORMAL);
+		menuString.append(String.format("%10s - exits the application\n", "[" + EXIT + "]"));
+		
 		// non-optional feature
 		final Calendar cal = new Calendar();
 		final String name = readLine("Enter your name: ");
 		final User user = new User(name, cal);
 		userSystem = new UserMenu();
 		userSystem.init(user);
-		features.add(cal);
+		addFeature(cal);
+	}
 
-		// TODO
-		features.add(new AlarmMenu(key, properties.getProperty(key)));
-		features.add(new Calculator(key, properties.getProperty(key)));
-		features.add(new Clock(key, properties.getProperty(key)));
-		features.add(new Notes(key, properties.getProperty(key)));
+	
 
+	 private void  init__wrappee__Calculator  () {
+		init__wrappee__Base();
+		addFeature(new Calculator());
+	}
+
+	
+
+	 private void  init__wrappee__Clock  () {
+		init__wrappee__Calculator();
+		addFeature(new Clock());
+	}
+
+	
+
+	private void init() {
+		init__wrappee__Clock();
+		
 		final UserMenu sys = new UserMenu(userSystem, features);
 		userSystem = sys;
-		features.add(sys);
-
-		menuString = new StringBuilder();
-		menuString.append(PROMPT_BOLD + "main menu:\n" + PROMPT_NORMAL);
-		menuString.append(String.format("%10s - exits the application\n", "[" + EXIT + "]"));
-
-		// TODO
-		String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
-		menuString.append(keyStr).append(f.description()).append("\n");
+		addFeature(sys);
 	}
+
+	
 	
 	private void addFeature(final Feature f) {
 		features.add(f);
@@ -76,6 +116,8 @@ public final class App implements Runnable {
 		String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");
 		menuString.append(keyStr).append(f.description()).append("\n");
 	}
+
+	
 	
 	public User currentUser() {
 		if (userSystem == null) {
@@ -84,12 +126,16 @@ public final class App implements Runnable {
 		return userSystem.current();
 	}
 
+	
+
 	public Calendar calendar() {
 		if (currentUser() == null) {
 			return null;
 		}
 		return currentUser().getCalendar();
 	}
+
+	
 
 	public void run() {
 		init();
@@ -106,6 +152,8 @@ public final class App implements Runnable {
 		}
 	}
 
+	
+
 	private void choose(final String key) {
 		for (final Feature feature : features) {
 			if (feature.menuKey().equals(key)) {
@@ -115,6 +163,8 @@ public final class App implements Runnable {
 		}
 		printErr("Invalid option!");
 	}
+
+	
 
 	///////////////////////////////////////////////////////////////////
 	// Utility functions for I/O operations on standard input/output //
@@ -129,6 +179,8 @@ public final class App implements Runnable {
 		}
 		return PROMPT_BOLD_BLUE + currentUser() + PROMPT_BOLD_WHITE + feat + PROMPT_NORMAL;
 	}
+
+	
 
 	private void write(final Object obj, final String key, boolean error) {
 		if (obj == null || obj.toString().isEmpty()) {
@@ -145,33 +197,49 @@ public final class App implements Runnable {
 		}
 	}
 
+	
+
 	public static void print(final Object obj, final String key) {
 		app().write(obj, key, false);
 	}
+
+	
 
 	public static void print(final Object obj) {
 		print(obj, "");
 	}
 
+	
+
 	public static void println(final Object obj, final String key) {
 		print(obj.toString() + "\n", key);
 	}
+
+	
 
 	public static void println(final Object obj) {
 		println(obj, "");
 	}
 
+	
+
 	public static void printErr(final Object obj, final String key) {
 		app().write(obj.toString(), key, true);
 	}
+
+	
 
 	public static void printErr(final Object obj) {
 		printErr(obj, null);
 	}
 
+	
+
 	public static void clear() {
 		System.out.println(PROMPT_CLEAR);
 	}
+
+	
 
 	private String read(final String prompt, final String key) {
 		System.out.print(prompt(key));
@@ -179,17 +247,25 @@ public final class App implements Runnable {
 		return reader.nextLine();
 	}
 
+	
+
 	public static String readLine(final String prompt, final String key) {
 		return app().read(prompt, key);
 	}
+
+	
 
 	public static String readLine(final String prompt) {
 		return readLine(prompt, "");
 	}
 
+	
+
 	public static String readLine() {
 		return readLine("");
 	}
+
+	
 
 	public static void sleep() {
 		try {
@@ -199,9 +275,13 @@ public final class App implements Runnable {
 		}
 	}
 
+	
+
 	public static App app() {
 		return INSTANCE;
 	}
+
+	
 
 	/**
 	 * @param args
@@ -211,4 +291,6 @@ public final class App implements Runnable {
 		INSTANCE = new App();
 		SwingUtilities.invokeLater(INSTANCE);
 	}
+
+
 }
