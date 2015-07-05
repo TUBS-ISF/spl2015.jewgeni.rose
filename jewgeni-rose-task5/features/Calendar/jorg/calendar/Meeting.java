@@ -67,10 +67,10 @@ public class Meeting implements Comparable<Meeting> {
 
 	@Override
 	public String toString() {
-		mkString();		
+		mkString();
 		String str = reminderString.toString();
 		reminderString.delete(0, reminderString.length());
-		return mkString();
+		return str;
 	}
 
 	private void mkString() {
@@ -78,6 +78,6 @@ public class Meeting implements Comparable<Meeting> {
 		reminderString.append(String.format("Description: %s%n", note));
 		reminderString.append(String.format("Date:        %1$te. %1$tB %1$tY%n", date));
 		reminderString.append(String.format("Start:       %tR%n", date.plus(duration)));
-		reminderString.append(String.format("Place:       %s%n", place));		
+		reminderString.append(String.format("Place:       %s%n", place));
 	}
 }

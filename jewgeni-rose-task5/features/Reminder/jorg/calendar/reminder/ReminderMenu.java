@@ -97,7 +97,7 @@ public final class ReminderMenu extends BasicFeature {
     private boolean add(final String meeting, final Duration before) {
         final Meeting m = app().calendar().findMeeting(meeting);
         if (m != null) {
-            final Reminder r = build(meeting, before);
+            final Reminder r = build(m, before);
             m.changeReminder(r);
             reminders.put(meeting, r);
             SwingUtilities.invokeLater(r);

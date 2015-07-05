@@ -10,7 +10,7 @@ public class Notes extends BasicFeature {
 	private static final String LIST_ALL_NOTES = "list";
 
 	public Notes() {
-		original();
+		
 		menuString.append(String.format("%10s - remove a note\n", "[" + REMOVE_NOTE + "]"));
 		menuString.append(String.format("%10s - list all notes\n", "[" + LIST_ALL_NOTES + "]"));
 	}
@@ -45,7 +45,7 @@ public class Notes extends BasicFeature {
 			}
 		} else if (LIST_ALL_NOTES.equals(input)) {
 			list();
-		} else
-			original(input);
+		} 
+		return original(input);
 	}
 }

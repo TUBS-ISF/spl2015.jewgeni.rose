@@ -7,7 +7,7 @@ public abstract class Sharer {
 
     protected final String name;
 
-    protected Sharer(final String name) {
+    public Sharer(final String name) {
         this.name = name;
     }
 

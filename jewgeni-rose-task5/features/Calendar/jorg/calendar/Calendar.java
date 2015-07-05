@@ -51,7 +51,7 @@ public class Calendar extends BasicFeature {
 		menuString.append(String.format("%10s - Show all meetings\n", "[" + LIST_MEETINGS + "]"));
 	}
 	
-	private void addFeature(final Feature f) {
+	private void addFeature(final BasicFeature f) {
 		features.add(f);
 		
 		String keyStr = String.format("%10s - ", "[" + f.menuKey() + "]");

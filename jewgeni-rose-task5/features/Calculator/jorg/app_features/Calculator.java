@@ -11,7 +11,7 @@ public class Calculator extends BasicFeature {
 
     private final GroovyShell shell;
 
-    public Calculator(final String key, final String desc) {
+    public Calculator() {
         super("calc", "start basic calculator");
         shell = new GroovyShell();
     }

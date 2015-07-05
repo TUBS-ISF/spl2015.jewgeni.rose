@@ -5,7 +5,7 @@ package jorg.calendar.exports.share;
  */
 public class LinkedInSharer extends Sharer {
 
-    protected LinkedInSharer() {
+    public LinkedInSharer() {
         super("linkedin");
     }
 

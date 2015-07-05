@@ -7,7 +7,7 @@ import static jorg.App.app;
  */
 public class TwitterSharer extends Sharer {
 
-    protected TwitterSharer() {
+    public TwitterSharer() {
         super("twitter");
     }
 

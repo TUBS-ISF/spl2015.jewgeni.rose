@@ -69,7 +69,7 @@ public class AlarmMenu extends BasicFeature {
 class Alarm implements Runnable {
 
     private LocalDateTime time;
-    private final Duration sleep;
+    private Duration sleep;
 
     Alarm(final LocalDateTime time, final Duration sleep) {
         this.sleep = sleep;

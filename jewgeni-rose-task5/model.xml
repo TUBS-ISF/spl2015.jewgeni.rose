@@ -18,7 +18,7 @@
 						<description>
 							Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 						</description>
-						<or name="Export">
+						<or name="Exports">
 							<description>
 								Print function for meetings. Possible output formats would be 
 								pdf, html, markdown or plain text documents.
@@ -50,7 +50,7 @@
 							<feature mandatory="true" name="CsvExport"/>
 							<feature mandatory="true" name="IcsExport"/>
 						</or>
-						<or name="Import">
+						<or name="Imports">
 							<description>
 								Basic I/O operations for import from and export to 
 								different (calendar) formats.

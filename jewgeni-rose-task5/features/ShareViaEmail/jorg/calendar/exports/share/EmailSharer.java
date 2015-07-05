@@ -7,7 +7,7 @@ import static jorg.App.app;
  */
 public class EmailSharer extends Sharer {
 
-    protected EmailSharer() {
+    public EmailSharer() {
         super("email");
     }
 

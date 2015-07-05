@@ -25,10 +25,10 @@ public class Notes extends BasicFeature {
 		notes = new Stack<Note>();
 
 		menuString = new StringBuilder();
-		sb.append(App.PROMPT_BOLD + "notes menu:\n" + App.PROMPT_NORMAL);
-		sb.append(String.format("%10s - exits notes menu\n", "[" + EXIT + "]"));
-		sb.append(String.format("%10s - add a new note\n", "[" + ADD_NOTE + "]"));
-		sb.append(String.format("%10s - view last note\n", "[" + VIEW_LAST_NOTE + "]"));
+		menuString.append(App.PROMPT_BOLD + "notes menu:\n" + App.PROMPT_NORMAL);
+		menuString.append(String.format("%10s - exits notes menu\n", "[" + EXIT + "]"));
+		menuString.append(String.format("%10s - add a new note\n", "[" + ADD_NOTE + "]"));
+		menuString.append(String.format("%10s - view last note\n", "[" + VIEW_LAST_NOTE + "]"));
 	}
 
 	public void add(final String title, final String desc) {

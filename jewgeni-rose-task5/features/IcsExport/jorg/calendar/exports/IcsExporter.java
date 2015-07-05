@@ -18,8 +18,8 @@ public class IcsExporter extends Exporter {
     private static final String FOOTER = "END:VCALENDAR\n";
     private final DateFormat dateFormat;
 
-    public IcsExporter(final String name) {
-        super(name);
+    public IcsExporter() {
+        super("ics");
         dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
     }
 

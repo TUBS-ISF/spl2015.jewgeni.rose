@@ -1,6 +1,6 @@
 package jorg.calendar;
 
-import jorg.ReminderMenu;
+import jorg.calendar.reminder.ReminderMenu;
 
 /**
  * @author rose
@@ -8,7 +8,6 @@ import jorg.ReminderMenu;
 public class Calendar extends BasicFeature {
 
 	public Calendar(final String key, final String desc) {
-		original(key, desc);
 		addFeature(new ReminderMenu());
 	}
 }

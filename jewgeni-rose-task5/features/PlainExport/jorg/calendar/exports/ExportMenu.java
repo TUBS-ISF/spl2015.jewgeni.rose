@@ -6,7 +6,6 @@ package jorg.calendar.exports;
 public class ExportMenu extends BasicFeature {
 
     public ExportMenu() {
-        original();
         addExporter(new PlainExporter());
     }
 }

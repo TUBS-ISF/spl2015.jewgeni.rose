@@ -13,7 +13,6 @@ public class HtmlExporter extends Exporter {
 	private final Set<Sharer> sharers;
 
 	public HtmlExporter() {
-		original();
 		sharers = new HashSet<Sharer>();
 	}
 

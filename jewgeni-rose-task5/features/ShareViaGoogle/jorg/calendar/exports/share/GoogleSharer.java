@@ -5,7 +5,7 @@ package jorg.calendar.exports.share;
  */
 public class GoogleSharer extends Sharer {
 
-    protected GoogleSharer() {
+    public GoogleSharer() {
         super("google");
     }
 

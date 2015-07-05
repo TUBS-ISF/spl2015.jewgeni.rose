@@ -5,7 +5,7 @@ package jorg.calendar.exports.share;
  */
 public class FacebookSharer extends Sharer {
 
-    protected FacebookSharer() {
+    public FacebookSharer() {
         super("facebook");
     }
 

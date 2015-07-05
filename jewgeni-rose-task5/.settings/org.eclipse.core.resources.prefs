@@ -1,9 +1,7 @@
 eclipse.preferences.version=1
 encoding//configs/.default.fideconf=UTF-8
+encoding//configs/.example1.fideconf=UTF-8
+encoding//configs/.example2.fideconf=UTF-8
 encoding//configs/.example3.fideconf=UTF-8
 encoding//configs/.example4.fideconf=UTF-8
 encoding//currentproducts/default/default.config=UTF-8
-encoding//currentproducts/example1/example1.config=UTF-8
-encoding//currentproducts/example2/example2.config=UTF-8
-encoding//currentproducts/example3/example3.config=UTF-8
-encoding//currentproducts/example4/example4.config=UTF-8

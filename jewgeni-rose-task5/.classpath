@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src/default"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/rose/Projects/Driver/groovy-2.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -6,7 +6,7 @@ package jorg;
 public abstract class BasicFeature implements Feature {
 
     protected final String key, desc;
-
+    
     protected BasicFeature(final String key, final String desc) {
         this.key = key;
         this.desc = desc;

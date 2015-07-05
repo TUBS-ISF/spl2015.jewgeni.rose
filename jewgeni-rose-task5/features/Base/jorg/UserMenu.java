@@ -26,11 +26,11 @@ public class UserMenu extends BasicFeature {
     private final StringBuilder menuString;
 
     public UserMenu() {
-        this("users", "advanced user management", null, null);
+        this(null, null);
     }
 
     public UserMenu(final UserMenu system, final List<Feature> features) {
-        this();
+        super("users", "advanced user management");
         if (system == null) {
             this.users = new ArrayDeque<User>();
         } else {
@@ -79,7 +79,7 @@ public class UserMenu extends BasicFeature {
 
     private void add() {
         final String name = readLine("Enter your name: ");
-        final Calendar cal = new Calendar(App.FEATURE_CALENDAR);
+        final Calendar cal = new Calendar();
         final User newUser = new User(name, cal);
         // remove old calendar from menu ...
         features.remove(current().getCalendar());
