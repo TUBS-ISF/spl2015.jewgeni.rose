@@ -1,0 +1,28 @@
+# Lists all features from the model with manual (first digit) and automatic (second digit) selection
+# 0 = deselected, 1 = selected, 2 = undefined
+21jOrganizer
+21Base
+12Calculator
+21Calendar
+11Exports
+11HtmlExport
+11Share
+12ShareViaEmail
+12ShareViaFacebook
+12ShareViaTwitter
+12ShareViaLinkedIn
+12ShareViaGoogle
+12PlainExport
+12MarkdownExport
+12CsvExport
+12IcsExport
+11Imports
+12CsvImport
+12IcsImport
+11Reminder
+12ReminderWithSound
+12Clock
+12MultiUserSupport
+11Notes
+12NotesWithHistory
+12Alarm
