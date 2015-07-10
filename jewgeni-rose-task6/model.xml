@@ -17,13 +17,13 @@
 					<description>
 						Basic feature of the jOrganizer. Consists of typical calendar functions like visualisation of date and time.
 					</description>
-					<or abstract="true" name="Exports">
+					<or abstract="true" name="Exporter">
 						<description>
 							Print function for meetings. Possible output formats would be 
 							pdf, html, markdown or plain text documents.
 						</description>
-						<and mandatory="true" name="HtmlExport">
-							<or abstract="true" name="Share">
+						<and mandatory="true" name="HtmlExporter">
+							<or abstract="true" name="Sharer">
 								<description>
 									Share function (like modern social media "share buttons") 
 									with a possibility for several share on several social media sites. 
@@ -40,22 +40,22 @@
 								<feature mandatory="true" name="ShareViaGoogle"/>
 							</or>
 						</and>
-						<feature mandatory="true" name="PlainExport">
+						<feature mandatory="true" name="PlainExporter">
 							<description>
 								
 							</description>
 						</feature>
-						<feature mandatory="true" name="MarkdownExport"/>
-						<feature mandatory="true" name="CsvExport"/>
-						<feature mandatory="true" name="IcsExport"/>
+						<feature mandatory="true" name="MarkdownExporter"/>
+						<feature mandatory="true" name="CsvExporter"/>
+						<feature mandatory="true" name="IcsExporter"/>
 					</or>
-					<or abstract="true" name="Imports">
+					<or abstract="true" name="Importer">
 						<description>
 							Basic I/O operations for import from and export to 
 							different (calendar) formats.
 						</description>
-						<feature mandatory="true" name="CsvImport"/>
-						<feature mandatory="true" name="IcsImport"/>
+						<feature mandatory="true" name="CsvImporter"/>
+						<feature mandatory="true" name="IcsImporter"/>
 					</or>
 					<and name="Reminder">
 						<description>

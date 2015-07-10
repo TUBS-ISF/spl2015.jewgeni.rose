@@ -1,4 +1,4 @@
 
-public aspect ShareViaEmail {
+public aspect PlainExporter {
 	// TODO Auto-generated aspect
 }

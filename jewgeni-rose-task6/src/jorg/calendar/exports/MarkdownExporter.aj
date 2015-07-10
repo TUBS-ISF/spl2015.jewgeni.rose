@@ -1,4 +1,4 @@
 
-public aspect Reminder {
+public aspect MarkdownExporter {
 	// TODO Auto-generated aspect
 }
